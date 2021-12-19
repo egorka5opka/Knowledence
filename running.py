@@ -16,7 +16,7 @@ def main():
     # функция run обрабатывает один кадр и возвращает какая активность будет следующей
     cur_action = service.START_MENU
     while cur_action != service.QUIT:
-        cur_action = actions[cur_action]()
+        cur_action = actions[cur_action](screen)
 
 
 main()
