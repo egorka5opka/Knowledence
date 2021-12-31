@@ -2,14 +2,14 @@
 import pygame
 from tools.methods import load_image
 
-class Vspom_kursor(pygame.sprite.Sprite):
+
+class SupportCursor(pygame.sprite.Sprite):
     def __init__(self, coordx, coordy):
         super().__init__()
-        self.image = load_image("kursor_empty.png")
-        self.mask = pygame.mask.from_surface(load_image("kursor_mask.png"))
-        self.rect = self.image.get_rect()
-        self.rect.top = coordy
-        self.rect.x = coordx
+        self.rect = pygame.Rect((coordx, coordy, 1, 1))
+        self.image = pygame.Surface((1, 1))
+        pygame.Surface.set_alpha(self.image, 0)
+
 
 class Button(pygame.sprite.Sprite):
     def __init__(self, image_name, all_sprites, group_spr, coordx, coordy):
@@ -22,8 +22,8 @@ class Button(pygame.sprite.Sprite):
         self.rect.x = coordx
 
     def get_click(self, coordx, coordy):
-        kur = Vspom_kursor(coordx, coordy)
-        if pygame.sprite.collide_mask(self, kur):
+        click = SupportCursor(coordx, coordy)
+        if pygame.sprite.collide_rect(self, click):
             return True
         else:
             return False
