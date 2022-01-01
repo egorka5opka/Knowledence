@@ -11,8 +11,8 @@ def run(screen):
     button_sprites = pygame.sprite.Group()
 
     fon = pygame.transform.scale(load_image(MAP_BACKGROUND), (WINDOW_WIDTH, WINDOW_HEIGHT))
-    settings_button = Button(SETTINGS_BUTTON, all_sprites, button_sprites, 1360, 10)
-    home_button = Button(HOME_BUTTON, all_sprites, button_sprites, 1460, 10)
+    settings_button = Button(SETTINGS_BUTTON, all_sprites, button_sprites, 1380, 10)
+    home_button = Button(HOME_BUTTON, all_sprites, button_sprites, 1462, 10)
     encyclopedia_button = Button(ENCYCLOPEDIA_BUTTON, all_sprites, button_sprites, 1140, 640)
     upgrading_button = Button(UPGRADING_BUTTON, all_sprites, button_sprites, 1365, 640)
 
