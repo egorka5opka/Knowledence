@@ -45,7 +45,7 @@ def run(screen):
                     pass
                 for spr in levels_sprites:
                     if spr.get_click(event.pos[0], event.pos[1]):
-                        launch(screen)
+                        return launch(screen)
         pygame.display.flip()
 
 def launch(screen):
@@ -60,3 +60,14 @@ def launch(screen):
 
     screen.blit(fon, ((WINDOW_WIDTH - SELF_WIDTH) // 2, (WINDOW_HEIGHT - SELF_HEIGHT) // 2))
     all_sprites.draw(screen)
+
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                return service.QUIT
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                if play_button.get_click(event.pos[0], event.pos[1]):
+                    return service.LEVEL_PLAY
+                elif close_button.get_click(event.pos[0], event.pos[1]):
+                    return service.MAIN_MENU
+        pygame.display.flip()
