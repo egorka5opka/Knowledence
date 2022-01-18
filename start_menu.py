@@ -6,7 +6,7 @@ from tools.methods import *
 from tools.classes import Button
 
 
-def run(screen):
+def run(screen,  *args, **kwargs):
     all_sprites = pygame.sprite.Group()
     button_sprites = pygame.sprite.Group()
 

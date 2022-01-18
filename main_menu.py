@@ -5,15 +5,20 @@ from const.file_paths import MAP_BACKGROUND, SETTINGS_BUTTON, ENCYCLOPEDIA_BUTTO
 from const.sizes import WINDOW_WIDTH, WINDOW_HEIGHT
 from tools.methods import load_image
 from tools.classes import Button
+import csv
 
 
-def run(screen):
+def run(screen, *args, **kwargs):
     all_sprites = pygame.sprite.Group()
     button_sprites = pygame.sprite.Group()
     levels_sprites = pygame.sprite.Group()
 
-    coords_levels = [(320, 405), (380, 450), (455, 410), (525, 365), (615, 370), (685, 410), (740, 460),
-                     (820, 470), (900, 490), (965, 450)]
+    try:
+        with open("data/levels_coords.csv") as fin:
+            reader = csv.reader(fin, delimiter=";")
+            coords_levels = [(int(i[0]), int(i[1])) for i in reader]
+    except Exception as e:
+        print("Не удалось загрузить уровни: " + str(e))
     kol = open("data/progress.txt", mode='r')
     kol = int(kol.readline())
 
