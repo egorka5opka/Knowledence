@@ -27,3 +27,12 @@ class Button(pygame.sprite.Sprite):
             return True
         else:
             return False
+
+
+class Background(pygame.sprite.Sprite):
+    def __init__(self, image_name, *groups):
+        super().__init__(*groups)
+        self.image = load_image(image_name)
+        self.rect = self.image.get_rect()
+        self.rect.y = 0
+        self.rect.x = 0
