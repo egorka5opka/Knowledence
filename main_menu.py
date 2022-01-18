@@ -5,19 +5,26 @@ from const.file_paths import MAP_BACKGROUND, SETTINGS_BUTTON, ENCYCLOPEDIA_BUTTO
 from const.sizes import WINDOW_WIDTH, WINDOW_HEIGHT
 from tools.methods import load_image
 from tools.classes import Button
+import csv
+from level_play import set_level
 
 
-def run(screen):
+def run(screen, *args, **kwargs):
     all_sprites = pygame.sprite.Group()
     button_sprites = pygame.sprite.Group()
     levels_sprites = pygame.sprite.Group()
 
-    coords_levels = [(320, 405), (380, 450), (455, 410), (525, 365), (615, 370), (685, 410), (740, 460),
-                     (820, 470), (900, 490), (965, 450)]
+    try:
+        with open("data/levels_coords.csv") as fin:
+            reader = csv.reader(fin, delimiter=";")
+            coords_levels = [(int(i[0]), int(i[1])) for i in reader]
+    except Exception as e:
+        print("Не удалось загрузить уровни: " + str(e))
     kol = open("data/progress.txt", mode='r')
     kol = int(kol.readline())
 
-    fon = pygame.transform.scale(load_image(MAP_BACKGROUND), (WINDOW_WIDTH, WINDOW_HEIGHT))
+    # fon = pygame.transform.scale(load_image(MAP_BACKGROUND), (WINDOW_WIDTH, WINDOW_HEIGHT))
+    fon = load_image(MAP_BACKGROUND)
     settings_button = Button(SETTINGS_BUTTON, all_sprites, button_sprites, 1380, 10)
     home_button = Button(HOME_BUTTON, all_sprites, button_sprites, 1462, 10)
     encyclopedia_button = Button(ENCYCLOPEDIA_BUTTON, all_sprites, button_sprites, 1140, 640)
@@ -43,12 +50,13 @@ def run(screen):
                     pass
                 elif upgrading_button.get_click(event.pos[0], event.pos[1]):
                     pass
-                for spr in levels_sprites:
+                for ind, spr in enumerate(levels_sprites):
                     if spr.get_click(event.pos[0], event.pos[1]):
-                        return launch(screen)
+                        return launch(screen, ind)
         pygame.display.flip()
 
-def launch(screen):
+
+def launch(screen, level):
     SELF_WIDTH, SELF_HEIGHT = 742, 447
 
     all_sprites = pygame.sprite.Group()
@@ -67,6 +75,7 @@ def launch(screen):
                 return service.QUIT
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 if play_button.get_click(event.pos[0], event.pos[1]):
+                    set_level(level)
                     return service.LEVEL_PLAY
                 elif close_button.get_click(event.pos[0], event.pos[1]):
                     return service.MAIN_MENU

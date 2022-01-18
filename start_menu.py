@@ -6,7 +6,7 @@ from tools.methods import *
 from tools.classes import Button
 
 
-def run(screen):
+def run(screen,  *args, **kwargs):
     all_sprites = pygame.sprite.Group()
     button_sprites = pygame.sprite.Group()
 
@@ -20,6 +20,7 @@ def run(screen):
             if event.type == pygame.QUIT:
                 return service.QUIT
             elif event.type == pygame.MOUSEBUTTONDOWN:
-                if button.get_click(event.pos[0], event.pos[1]):
-                    return service.MAIN_MENU
+                return service.MAIN_MENU
+            elif event.type == pygame.KEYDOWN:
+                return service.MAIN_MENU
         pygame.display.flip()
