@@ -1,16 +1,20 @@
 import pygame
 from const import service
 from tools import classes, methods
+import csv
 
 started = False
 level = 0
 all_sprites = pygame.sprite.Group()
+tower_sprites = pygame.sprite.Group()
+tower_places_sprites = pygame.sprite.Group()
+twist_points = []
 
 
 def run(screen,  *args, **kwargs):
-    global level
+    global all_sprites, level
     level = 1
-    load_level(all_sprites)
+    load_level()
     running = service.LEVEL_PLAY
     while running == service.LEVEL_PLAY:
         for event in pygame.event.get():
@@ -18,8 +22,10 @@ def run(screen,  *args, **kwargs):
                 running = service.QUIT
                 break
         all_sprites.draw(screen)
+        for i in range(len(twist_points) - 1):
+            pygame.draw.line(screen, (0, 0, 0), twist_points[i], twist_points[i + 1], 5)
         pygame.display.flip()
-    all_sprites.clear()
+    all_sprites = pygame.sprite.Group()
     return running
 
 
@@ -28,6 +34,16 @@ def set_level(x):
     level = x
 
 
-def load_level(all_sprites):
+def load_level():
+    global all_sprites, twist_points, tower_places_sprites
     background = classes.Background(f"levels_data/{level}level_background.png", all_sprites)
-
+    try:
+        fin = open(f"data/levels_data/{level}level.csv")
+        reader = csv.reader(fin, delimiter=";")
+        cnt_points = int(reader.__next__()[0])
+        for _ in range(cnt_points):
+            coords = reader.__next__()
+            twist_points.append((int(coords[0]), int(coords[1])))
+        print(twist_points)
+    except Exception as e:
+        print("Не удалось открыть файл data/levels_data/1level.csv", e)
