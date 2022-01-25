@@ -7,8 +7,7 @@ class TowerPlace(pygame.sprite.Sprite):
 
     def __init__(self, center, *args):
         super().__init__(*args)
-        # x = center - self.place_image.get_width() / 2
-        # y = center - self.place_image.get_height() / 2
         self.image = self.place_image
         self.rect = self.image.get_rect()
         self.rect.center = center
+

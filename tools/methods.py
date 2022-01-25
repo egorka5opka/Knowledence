@@ -2,6 +2,7 @@
 import os
 import sys
 import pygame
+import math
 from const import file_paths
 
 
@@ -19,3 +20,7 @@ def load_image(name, colorkey=None):
     else:
         image = image.convert_alpha()
     return image
+
+
+def distance(p1, p2):
+    return math.sqrt((p1[0] - p2[0]) ** 2 + (p1[1] - p2[1]) ** 2)
