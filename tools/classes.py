@@ -28,6 +28,10 @@ class Button(pygame.sprite.Sprite):
         else:
             return False
 
+    def move_on(self, x, y):
+        self.rect.top += y
+        self.rect.x += x
+
 
 class Background(pygame.sprite.Sprite):
     def __init__(self, image_name, *groups):
