@@ -50,7 +50,7 @@ def run(screen, *args, **kwargs):
                 elif encyclopedia_button.get_click(event.pos[0], event.pos[1]):
                     pass
                 elif upgrading_button.get_click(event.pos[0], event.pos[1]):
-                    pass
+                    return service.UPGRADING
                 for ind, spr in enumerate(levels_sprites):
                     if spr.get_click(event.pos[0], event.pos[1]):
                         return launch(screen, ind)
@@ -63,12 +63,12 @@ def launch(screen, level):
     all_sprites = pygame.sprite.Group()
     button_sprites = pygame.sprite.Group()
 
-    fon = pygame.transform.scale(load_image(LAUNCH_BACKGROUND), (SELF_WIDTH, SELF_HEIGHT))
+    background = pygame.transform.scale(load_image(LAUNCH_BACKGROUND), (SELF_WIDTH, SELF_HEIGHT))
     map_of_level = pygame.transform.scale(load_image(LEVEL_BACKGROUND.format(level)), (465, 240))
     play_button = Button(PLAY_BUTTON, all_sprites, button_sprites, (WINDOW_WIDTH - 95) // 2, 550)
     close_button = Button(CLOSE_BUTTON, all_sprites, button_sprites, 1090, 190)
 
-    screen.blit(fon, ((WINDOW_WIDTH - SELF_WIDTH) // 2, (WINDOW_HEIGHT - SELF_HEIGHT) // 2))
+    screen.blit(background, ((WINDOW_WIDTH - SELF_WIDTH) // 2, (WINDOW_HEIGHT - SELF_HEIGHT) // 2))
     screen.blit(map_of_level, ((WINDOW_WIDTH - SELF_WIDTH) // 2 + 30, (WINDOW_HEIGHT - SELF_HEIGHT) // 2 + 30))
     all_sprites.draw(screen)
 
