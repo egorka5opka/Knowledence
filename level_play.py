@@ -23,6 +23,8 @@ def run(screen,  *args, **kwargs):
             if event.type == pygame.QUIT:
                 running = service.QUIT
                 break
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                monster.impact(event.button - 2, (service.VELOCITY_BUFF, 0.1, 5000))
         monster.update(clock.tick())
         all_sprites.draw(screen)
         for i in range(len(twist_points) - 1):
