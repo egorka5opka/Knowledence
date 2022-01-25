@@ -32,7 +32,8 @@ def run(screen, *args, **kwargs):
 
     for i in range(kol):
         Button(COMPLETE_LEVEL, all_sprites, levels_sprites, coords_levels[i][0], coords_levels[i][1])
-    Button(INCOMPLETE_LEVEL, all_sprites, levels_sprites, coords_levels[kol][0], coords_levels[kol][1])
+    if kol != 10:
+        Button(INCOMPLETE_LEVEL, all_sprites, levels_sprites, coords_levels[kol][0], coords_levels[kol][1])
 
     screen.blit(fon, (0, 0))
     all_sprites.draw(screen)

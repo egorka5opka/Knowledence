@@ -1,5 +1,5 @@
 import pygame
-from const import service
+from const import service, file_paths
 from tools import classes, methods, towers, enemies
 import csv
 
@@ -15,7 +15,7 @@ clock = pygame.time.Clock()
 
 def run(screen,  *args, **kwargs):
     global all_sprites, level
-    level = 1
+    level = 0
     load_level()
     running = service.LEVEL_PLAY
     monster = enemies.Enemy(twist_points, all_sprites)
@@ -40,7 +40,7 @@ def set_level(x):
 
 def load_level():
     global all_sprites, twist_points, tower_places_sprites, background
-    background = classes.Background(f"levels_data/{level}level_background.png", all_sprites)
+    background = classes.Background(file_paths.LEVEL_BACKGROUND.format(level), all_sprites)
     try:
         fin = open(f"data/levels_data/{level}level.csv")
         reader = csv.reader(fin, delimiter=";")
