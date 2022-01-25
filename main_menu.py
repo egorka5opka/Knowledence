@@ -1,7 +1,7 @@
 import pygame
 from const import service
 from const.file_paths import MAP_BACKGROUND, SETTINGS_BUTTON, ENCYCLOPEDIA_BUTTON, UPGRADING_BUTTON, HOME_BUTTON, \
-    COMPLETE_LEVEL, INCOMPLETE_LEVEL, LAUNCH_BACKGROUND, PLAY_BUTTON, CLOSE_BUTTON
+    COMPLETE_LEVEL, INCOMPLETE_LEVEL, LAUNCH_BACKGROUND, PLAY_BUTTON, CLOSE_BUTTON, LEVEL_BACKGROUND
 from const.sizes import WINDOW_WIDTH, WINDOW_HEIGHT
 from tools.methods import load_image
 from tools.classes import Button
@@ -63,10 +63,12 @@ def launch(screen, level):
     button_sprites = pygame.sprite.Group()
 
     fon = pygame.transform.scale(load_image(LAUNCH_BACKGROUND), (SELF_WIDTH, SELF_HEIGHT))
+    map_of_level = pygame.transform.scale(load_image(LEVEL_BACKGROUND.format(level)), (465, 240))
     play_button = Button(PLAY_BUTTON, all_sprites, button_sprites, (WINDOW_WIDTH - 95) // 2, 550)
     close_button = Button(CLOSE_BUTTON, all_sprites, button_sprites, 1090, 190)
 
     screen.blit(fon, ((WINDOW_WIDTH - SELF_WIDTH) // 2, (WINDOW_HEIGHT - SELF_HEIGHT) // 2))
+    screen.blit(map_of_level, ((WINDOW_WIDTH - SELF_WIDTH) // 2 + 30, (WINDOW_HEIGHT - SELF_HEIGHT) // 2 + 30))
     all_sprites.draw(screen)
 
     while True:

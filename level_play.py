@@ -53,4 +53,4 @@ def load_level():
             coords = reader.__next__()
             towers.TowerPlace((int(coords[0]), int(coords[1])), all_sprites, tower_places_sprites)
     except Exception as e:
-        print("Не удалось открыть файл data/levels_data/1level.csv", e)
+        print("Не удалось открыть файл data/levels_data/0level.csv", e)
