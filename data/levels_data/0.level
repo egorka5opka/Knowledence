@@ -1,7 +1,14 @@
-levels_data/0.bkg
-10; lives
-5555; start money
-8; tower_places
+9
+570;-100
+540;220
+300;340
+300;520
+460;600
+670;590
+850;650
+1024;490
+1580;480
+9
 400;140
 260;220
 540;345
@@ -9,23 +16,5 @@ levels_data/0.bkg
 600;470
 820;480
 660;680
+1090;585
 1340;340
-1; number of possible enemies' ways
-10; number of point in the way
-570;-100
-570;220
-300;340
-301;520
-350;580
-460;620
-670;590
-850;650
-1024;490
-1580;480
-2; number of waves in the level
-2;0
-dude;5;1
-griffon;3;1
-2;10000
-hog;3;1
-shield;1;1
