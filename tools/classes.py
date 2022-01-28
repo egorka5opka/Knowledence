@@ -32,7 +32,6 @@ class Button(pygame.sprite.Sprite):
         self.rect.top += y
         self.rect.x += x
 
-
 class Background(pygame.sprite.Sprite):
     def __init__(self, image_name, *groups):
         super().__init__(*groups)
