@@ -1,14 +1,5 @@
-9
-570;-100
-540;220
-300;340
-300;520
-460;600
-670;590
-850;650
-1024;490
-1580;480
-9
+levels_data/0.bkg
+9; tower_places
 400;140
 260;220
 540;345
@@ -18,3 +9,17 @@
 660;680
 1090;585
 1340;340
+1; number of possible enemies' ways
+9; number of point in the way
+570;-100
+570;220
+300;340
+300;520
+460;600
+670;590
+850;650
+1024;490
+1580;480
+1; number of waves in the level
+1;0; number of enemies' types in the wave + time after previous wave
+base_enemy;5;1 enemy type + amount + way
