@@ -37,7 +37,7 @@ def load_level(all_sprites):
     try:
         ways = []
         tower_places_sprites = pygame.sprite.Group()
-        waves = []
+        waves = [1]
         fin = open(file_paths.LEVEL_DATA.format(level))
         reader = csv.reader(fin, delimiter=";")
         bckg_file = reader.__next__()[0]
