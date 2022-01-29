@@ -96,3 +96,11 @@ class Enemy(pygame.sprite.Sprite):
             self.list_buffs.append(list(b))
         self.health_bar.update_health(self.hp)
 
+
+enemy_classes = {"base_enemy": Enemy}
+
+
+def get_enemy_class(name):
+    if name in enemy_classes:
+        return enemy_classes[name]
+    return Enemy
