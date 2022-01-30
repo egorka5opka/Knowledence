@@ -16,8 +16,8 @@ def run(screen,  *args, **kwargs):
 
     level = 0
     waves, tower_places_sprites, background = load_level(all_sprites)
+    current_wave = 0
     if not waves:
-        print("Не удалось загрузить уровень")
         return service.MAIN_MENU
     running = service.LEVEL_PLAY
     clock = pygame.time.Clock()
@@ -26,6 +26,12 @@ def run(screen,  *args, **kwargs):
             if event.type == pygame.QUIT:
                 running = service.QUIT
                 break
+        tick = clock.tick()
+        if current_wave < len(waves):
+            result = waves[current_wave].summon(tick, all_sprites, enemies_sprites, entities_sprites)
+            if result == Wave.LAST_ENEMY:
+                current_wave += 1
+        entities_sprites.update(tick)
         all_sprites.draw(screen)
         pygame.display.flip()
     return running
@@ -40,7 +46,7 @@ def load_level(all_sprites):
     try:
         ways = []
         tower_places_sprites = pygame.sprite.Group()
-        waves = [1]
+        waves = []
         fin = open(file_paths.LEVEL_DATA.format(level))
         reader = csv.reader(fin, delimiter=";")
         bckg_file = reader.__next__()[0]
@@ -68,10 +74,35 @@ def load_level(all_sprites):
 
 
 class Wave:
+    SUMMON_ENEMY = 1
+    NOT_SUMMON_ENEMY = 0
+    LAST_ENEMY = -1
+
     def __init__(self, reader, ways):
         self.size, self.time = map(int, reader.__next__())
         self.enemies = []
+        self.delay_time = 1000.0
+        self.delay = 0
         for _ in range(self.size):
             name, cnt, way = reader.__next__()
-            self.enemies.append((enemies.get_enemy_class(name), int(cnt), ways[int(way) - 1]))
+            self.enemies.append([enemies.get_enemy_class(name), int(cnt), ways[int(way) - 1]])
+        self.enemies.reverse()
 
+    def summon(self, tick, *sprite_groups):
+        if self.time > 0:
+            self.time -= tick
+            return self.NOT_SUMMON_ENEMY
+        else:
+            if self.delay > 0:
+                self.delay -= tick
+                return self.NOT_SUMMON_ENEMY
+            else:
+                self.delay = self.delay_time
+                name, cnt, way = self.enemies[-1]
+                enemies.get_enemy_class(name)(way, *sprite_groups)
+                self.enemies[-1][1] -= 1
+                if self.enemies[-1][1] == 0:
+                    self.enemies = self.enemies[:-1]
+                    if not self.enemies:
+                        return self.LAST_ENEMY
+                return self.SUMMON_ENEMY

@@ -10,16 +10,19 @@ levels_data/0.bkg
 1090;585
 1340;340
 1; number of possible enemies' ways
-9; number of point in the way
+10; number of point in the way
 570;-100
 570;220
 300;340
 300;520
-460;600
+350;580
+460;620
 670;590
 850;650
 1024;490
 1580;480
-1; number of waves in the level
+2; number of waves in the level
 1;0
 base_enemy;5;1
+1;10000
+base_enemy;3;1
