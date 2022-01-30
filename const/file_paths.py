@@ -17,3 +17,4 @@ UPGRADING_BACKGROUND = 'upgrading_background.png'
 LEVEL_DATA = 'data/levels_data/{}.level'
 UPGRADE_BUTTON = 'upgrade_button.png'
 BASE_ENEMY = "data/enemies/base.enemy"
+LIVES_IMAGE = "lives.png"

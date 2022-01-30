@@ -1,6 +1,7 @@
-enemies/monster.png;100;60;1
+enemies/monster.png;100;60;1;1
 -----------
 1. путь к файлу с текстурой
 2. max_hp
 3. velocity
 4. fly
+5. сколько жизней снимает если пройдёт

@@ -1,21 +1,21 @@
 import pygame
 from const import service, file_paths
-from tools import classes, methods, towers, enemies
+from tools import classes, methods, towers, enemies, interface
 import csv
 
-started = False
+in_progress = False
 level = 0
 
 
 def run(screen,  *args, **kwargs):
-    global level
+    global level, in_progress
     all_sprites = pygame.sprite.Group()
     entities_sprites = pygame.sprite.Group()
     towers_sprites = pygame.sprite.Group()
     enemies_sprites = pygame.sprite.Group()
 
     level = 0
-    waves, tower_places_sprites, background = load_level(all_sprites)
+    waves, tower_places_sprites, background, lives = load_level(all_sprites)
     current_wave = 0
     if not waves:
         return service.MAIN_MENU
@@ -32,18 +32,34 @@ def run(screen,  *args, **kwargs):
             if result == Wave.LAST_ENEMY:
                 current_wave += 1
         entities_sprites.update(tick)
+        for enemy in enemies_sprites:
+            if enemy.gone:
+                lives -= enemy.price
+                enemy.kill()
+                if lives.get_points() == 0:
+                    gameover()
+                    running = service.QUIT()
+                    break
         all_sprites.draw(screen)
         pygame.display.flip()
+    in_progress = False
     return running
+
+
+def gameover():
+    pass
 
 
 def set_level(x):
     global level
-    level = x
+    if not in_progress:
+        level = x
 
 
 def load_level(all_sprites):
     try:
+        global in_progress
+        in_progress = True
         ways = []
         tower_places_sprites = pygame.sprite.Group()
         waves = []
@@ -51,6 +67,8 @@ def load_level(all_sprites):
         reader = csv.reader(fin, delimiter=";")
         bckg_file = reader.__next__()[0]
         background = classes.Background(bckg_file, all_sprites)
+        cnt_lives = int(reader.__next__()[0])
+        lives = interface.Lives(cnt_lives, all_sprites)
         cnt_places = int(reader.__next__()[0])
         for _ in range(cnt_places):
             coords = reader.__next__()
@@ -70,7 +88,7 @@ def load_level(all_sprites):
     except Exception as e:
         print("Не удалось открыть файл data/" + file_paths.LEVEL_DATA.format(level), e)
         return None, None, None
-    return waves, tower_places_sprites, background
+    return waves, tower_places_sprites, background, lives
 
 
 class Wave:

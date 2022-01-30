@@ -32,8 +32,14 @@ def load_enemy(enemy_file):
         reader = csv.reader(fin, delimiter=";")
         data = list(reader.__next__())
         fin.close()
-        enemy = [load_image(data[0]), int(data[1]), int(data[1]), data[3] == "1"]
+        enemy = [load_image(data[0]), int(data[1]), int(data[2]), data[3] == "1", int(data[4])]
         return enemy
     except FileNotFoundError:
-        print(f"Не найден файл {enemy_file}")
-        return load_image("enemies/monster.png"), 100, 60, False
+        print(f"File not found {enemy_file}")
+        return load_image("enemies/monster.png"), 100, 60, False, 1
+    except ValueError:
+        print(f"Incorrect file data {enemy_file}")
+        return load_image("enemies/monster.png"), 100, 60, False, 1
+    except Exception as e:
+        print(f"Непредвиденная ошибка: {e}")
+        return load_image("enemies/monster.png"), 100, 60, False, 1
