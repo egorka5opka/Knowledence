@@ -1,8 +1,9 @@
+import csv
 import math
 import pygame
-from tools.methods import load_image, distance
+from tools.methods import distance, load_enemy
 from const.service import DAMAGE_BUFF, VELOCITY_BUFF, FLY_ABILITY
-from  const import colors, sizes
+from const import colors, sizes, file_paths
 
 
 class HealthBar(pygame.sprite.Sprite):
@@ -12,9 +13,7 @@ class HealthBar(pygame.sprite.Sprite):
         self.image = pygame.Surface(sizes.HEALTH_BAR_SIZE)
         self.image.fill(colors.NO_HEALTH_COLOR)
         self.rect = self.image.get_rect()
-        health = pygame.Surface(sizes.HEALTH_BAR_SIZE)
-        health.fill(colors.HEALTH_COLOR)
-        self.image.blit(health, (0, 0))
+        self.update_health(max_health)
 
     def move(self, rect):
         self.rect.bottom = rect.y
@@ -29,22 +28,19 @@ class HealthBar(pygame.sprite.Sprite):
 
 
 class Enemy(pygame.sprite.Sprite):
-    enemy_image = load_image("enemies/monster.png")
-    enemy_image = pygame.transform.scale(enemy_image, (50, 50))
+    enemy_image, max_health, velocity, flying, price = load_enemy(file_paths.BASE_ENEMY)
 
     def __init__(self, way_points, *args):
         super().__init__(*args)
         self.image = self.enemy_image
         self.rect = self.image.get_rect()
-        self.velocity = 60
-        self.buffs = {VELOCITY_BUFF: 0.5, DAMAGE_BUFF: 1, FLY_ABILITY: False}
-        self.max_hp = 100
-        self.hp = self.max_hp
+        self.buffs = {VELOCITY_BUFF: 1, DAMAGE_BUFF: 1, FLY_ABILITY: self.flying}
+        self.hp = self.max_health
         self.walked = 0
         self.way = way_points
         self.health_bar = HealthBar(self.hp, args[0])
         self.list_buffs = []
-        self.gone = True
+        self.gone = False
 
     def calc_coords(self):
         walked = 0.0
@@ -66,7 +62,7 @@ class Enemy(pygame.sprite.Sprite):
         self.health_bar.move(self.rect)
 
     def missed(self):
-        pass
+        self.gone = True
 
     def update(self, tick, *args):
         self.walked += self.velocity * self.buffs[VELOCITY_BUFF] * tick / 1000
@@ -91,9 +87,19 @@ class Enemy(pygame.sprite.Sprite):
         if hp_impact < 0:
             hp_impact *= self.buffs[DAMAGE_BUFF]
         self.hp += hp_impact
-        self.hp = min(self.hp, self.max_hp)
+        self.hp = min(self.hp, self.max_health)
+        if self.hp <= 0:
+            self.kill()
         for b in buffs:
             self.buffs[b[0]] += b[1]
             self.list_buffs.append(list(b))
         self.health_bar.update_health(self.hp)
 
+
+enemy_classes = {"base_enemy": Enemy}
+
+
+def get_enemy_class(name):
+    if name in enemy_classes:
+        return enemy_classes[name]
+    return Enemy
