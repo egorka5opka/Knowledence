@@ -15,18 +15,22 @@ def run(screen,  *args, **kwargs):
     enemies_sprites = pygame.sprite.Group()
 
     level = 0
-    waves, tower_places_sprites, background, lives = load_level(all_sprites)
+    waves, tower_places_sprites, background, lives, pause_btn, money = load_level(all_sprites)
     current_wave = 0
     if not waves:
         return service.MAIN_MENU
     running = service.LEVEL_PLAY
     clock = pygame.time.Clock()
     while running == service.LEVEL_PLAY:
+        tick = clock.tick()
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = service.QUIT
                 break
-        tick = clock.tick()
+            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                if pause_btn.clicked(event.pos):
+                    running = pause(screen)
+                    clock.tick()
         if current_wave < len(waves):
             result = waves[current_wave].summon(tick, all_sprites, enemies_sprites, entities_sprites)
             if result == Wave.LAST_ENEMY:
@@ -67,8 +71,9 @@ def load_level(all_sprites):
         reader = csv.reader(fin, delimiter=";")
         bckg_file = reader.__next__()[0]
         background = classes.Background(bckg_file, all_sprites)
-        cnt_lives = int(reader.__next__()[0])
-        lives = interface.Lives(cnt_lives, all_sprites)
+        lives = interface.Lives(int(reader.__next__()[0]), all_sprites)
+        money = interface.Money(int(reader.__next__()[0]), all_sprites)
+        pause_btn = interface.PauseButton(all_sprites)
         cnt_places = int(reader.__next__()[0])
         for _ in range(cnt_places):
             coords = reader.__next__()
@@ -88,7 +93,7 @@ def load_level(all_sprites):
     except Exception as e:
         print("Не удалось открыть файл data/" + file_paths.LEVEL_DATA.format(level), e)
         return None, None, None
-    return waves, tower_places_sprites, background, lives
+    return waves, tower_places_sprites, background, lives, pause_btn, money
 
 
 class Wave:
@@ -124,3 +129,18 @@ class Wave:
                     if not self.enemies:
                         return self.LAST_ENEMY
                 return self.SUMMON_ENEMY
+
+
+def pause(screen):
+    menu = pygame.Surface((800, 400))
+    running = service.PAUSE
+    screen.blit(menu, (100, 100))
+    pygame.display.flip()
+    while running == service.PAUSE:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = service.QUIT
+                break
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                running = service.LEVEL_PLAY
+    return running

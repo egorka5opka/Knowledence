@@ -24,13 +24,16 @@ class Button(pygame.sprite.Sprite):
     def get_click(self, coordx, coordy):
         click = SupportCursor(coordx, coordy)
         if pygame.sprite.collide_rect(self, click):
+            click.kill()
             return True
         else:
+            click.kill()
             return False
 
     def move_on(self, x, y):
         self.rect.top += y
         self.rect.x += x
+
 
 class Background(pygame.sprite.Sprite):
     def __init__(self, image_name, *groups):

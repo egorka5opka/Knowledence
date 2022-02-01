@@ -88,8 +88,6 @@ class Enemy(pygame.sprite.Sprite):
             hp_impact *= self.buffs[DAMAGE_BUFF]
         self.hp += hp_impact
         self.hp = min(self.hp, self.max_health)
-        if self.hp <= 0:
-            self.kill()
         for b in buffs:
             self.buffs[b[0]] += b[1]
             self.list_buffs.append(list(b))
