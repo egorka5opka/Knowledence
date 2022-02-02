@@ -77,7 +77,12 @@ def load_level(all_sprites):
         cnt_places = int(reader.__next__()[0])
         for _ in range(cnt_places):
             coords = reader.__next__()
-            towers.TowerPlace((int(coords[0]), int(coords[1])), all_sprites, tower_places_sprites)
+            place = towers.TowerPlace((int(coords[0]), int(coords[1])), all_sprites, tower_places_sprites)
+            if 0 == 0:
+                x = place.rect.centerx
+                y = place.rect.bottom
+                place.kill()
+                towers.Tower(x, y, all_sprites)
         cnt_ways = int(reader.__next__()[0])
         for _ in range(cnt_ways):
             twist_points = []

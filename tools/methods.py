@@ -46,3 +46,39 @@ def load_enemy(enemy_file, return_type=0):
     except Exception as e:
         print(f"Непредвиденная ошибка: {e}")
         return for_exception
+
+
+def load_tower(tower_file, return_type=0,):
+    try:
+        fin = open(tower_file)
+        reader = csv.DictReader(fin, delimiter=";")
+        tower = reader.__next__()
+        fin.close()
+        frames = cut_sheet(load_image(tower[IMAGE_PATH]), int(tower["columns"]), int(tower["rows"]))
+        if return_type:
+            return [frames, int(tower[DAMAGE]), int(tower[PRICE]), int(tower[ATTACK_SPEED]),
+                    tower[ATTACK_AIR] == "1", int(tower[TOWER_DAMAGE_BUFF]), int(tower[TOWER_VELOCITY_BUFF]),
+                    load_image(tower[BULLET_IMAGE]), tower[BULLET_VELOCITY]]
+        return tower
+    except FileNotFoundError:
+        print(f"File not found {tower_file}")
+        return
+    except ValueError as e:
+        print(f"Incorrect file data {tower_file}, {e}")
+        return
+    except Exception as e:
+        print(f"Непредвиденная ошибка: {e}")
+        return
+
+
+def cut_sheet(sheet, columns, rows):
+    rect = pygame.Rect(0, 0, sheet.get_width() // columns,
+                            sheet.get_height() // rows)
+    print(rect.size, rows, columns)
+    frames = []
+    for j in range(rows):
+        for i in range(columns):
+            frame_location = (rect.w * i, rect.h * j)
+            frames.append(sheet.subsurface(pygame.Rect(
+                frame_location, rect.size)))
+    return frames

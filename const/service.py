@@ -1,5 +1,4 @@
 # Здесь всякике служебные константы
-# Эти четыре пока обозначают текущую активность, то есть что происходит в игре (открыто меню, идёт игра и т.д.)
 START_MENU = 0
 MAIN_MENU = 1
 LEVEL_PLAY = 2
@@ -16,3 +15,9 @@ FLYING = "flying"
 IMAGE_PATH = "image"
 REWARD = "reward"
 PRICE = "price"
+ATTACK_SPEED = "speed"
+TOWER_DAMAGE_BUFF = "damage_buff"
+TOWER_VELOCITY_BUFF = "velocity_buff"
+ATTACK_AIR = "air"
+BULLET_IMAGE = "bullet_image"
+BULLET_VELOCITY = "bullet_velocity"
