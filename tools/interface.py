@@ -62,17 +62,3 @@ class Money(pygame.sprite.Sprite):
         text = self.font.render(str(self.money), True, colors.MAIN_TEXT_COLOR)
         self.image.blit(text, (70, 12))
 
-
-class PauseButton(pygame.sprite.Sprite):
-    image_btn = methods.load_image(file_paths.PAUSE_BUTTON)
-
-    def __init__(self, *args):
-        super().__init__(*args)
-        self.image = self.image_btn
-        self.rect = self.image.get_rect().move(sizes.PAUSE_POS)
-
-    def clicked(self, pos):
-        cursor = classes.SupportCursor(*pos)
-        res = bool(pygame.sprite.collide_rect(cursor, self))
-        cursor.kill()
-        return res

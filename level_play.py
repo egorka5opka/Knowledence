@@ -1,5 +1,5 @@
 import pygame
-from const import service, file_paths
+from const import service, file_paths, sizes
 from tools import classes, methods, towers, enemies, interface
 import csv
 
@@ -28,7 +28,7 @@ def run(screen,  *args, **kwargs):
                 running = service.QUIT
                 break
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
-                if pause_btn.clicked(event.pos):
+                if pause_btn.get_click(*event.pos):
                     running = pause(screen)
                     clock.tick()
         if current_wave < len(waves):
@@ -73,7 +73,7 @@ def load_level(all_sprites):
         background = classes.Background(bckg_file, all_sprites)
         lives = interface.Lives(int(reader.__next__()[0]), all_sprites)
         money = interface.Money(int(reader.__next__()[0]), all_sprites)
-        pause_btn = interface.PauseButton(all_sprites)
+        pause_btn = classes.Button(file_paths.PAUSE_BUTTON, *sizes.PAUSE_POS, all_sprites)
         cnt_places = int(reader.__next__()[0])
         for _ in range(cnt_places):
             coords = reader.__next__()
@@ -132,15 +132,31 @@ class Wave:
 
 
 def pause(screen):
-    menu = pygame.Surface((800, 400))
+    buttons = pygame.sprite.Group()
+    menu = methods.load_image(file_paths.LAUNCH_BACKGROUND)
+    menu_width, menu_height = menu.get_size()
     running = service.PAUSE
-    screen.blit(menu, (100, 100))
+    menux = (sizes.WINDOW_WIDTH - menu_width) / 2
+    menuy = (sizes.WINDOW_HEIGHT - menu_height) / 2
+    continue_btn = classes.Button(file_paths.CONTINUE_BTN, 0, (menu_height - 75 * 2) / 3, buttons)
+    continue_btn.rect.centerx = menu_width / 2
+    exit_btn = classes.Button(file_paths.EXIT_LEVEL_BTN, 9, (menu_height - 75 * 2) / 3 * 2 + 75, buttons)
+    exit_btn.rect.centerx = menu_width / 2
+
+    buttons.draw(menu)
+
+    screen.blit(menu, (menux, menuy))
     pygame.display.flip()
     while running == service.PAUSE:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = service.QUIT
                 break
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                running = service.LEVEL_PLAY
+            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                x = event.pos[0] - menux
+                y = event.pos[1] - menuy
+                if continue_btn.get_click(x, y):
+                    running = service.LEVEL_PLAY
+                if exit_btn.get_click(x, y):
+                    running = service.MAIN_MENU
     return running
