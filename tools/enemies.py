@@ -28,7 +28,7 @@ class HealthBar(pygame.sprite.Sprite):
 
 
 class Enemy(pygame.sprite.Sprite):
-    enemy_image, max_health, velocity, flying, price = load_enemy(file_paths.BASE_ENEMY)
+    enemy_image, max_health, velocity, flying, price, reward = load_enemy(file_paths.BASE_ENEMY)
 
     def __init__(self, way_points, *args):
         super().__init__(*args)
