@@ -12,26 +12,22 @@ class SupportCursor(pygame.sprite.Sprite):
 
 
 class Button(pygame.sprite.Sprite):
-    def __init__(self, image_name, all_sprites, group_spr, coordx, coordy):
-        super().__init__(all_sprites)
-        self.add(group_spr)
+    def __init__(self, image_name, coordx, coordy, *args):
+        super().__init__(*args)
         self.image = load_image(image_name)
         self.mask = pygame.mask.from_surface(self.image)
         self.rect = self.image.get_rect()
-        self.rect.top = coordy
+        self.rect.y = coordy
         self.rect.x = coordx
 
     def get_click(self, coordx, coordy):
         click = SupportCursor(coordx, coordy)
-        if pygame.sprite.collide_rect(self, click):
-            click.kill()
-            return True
-        else:
-            click.kill()
-            return False
+        res = bool(pygame.sprite.collide_rect(self, click))
+        click.kill()
+        return res
 
     def move_on(self, x, y):
-        self.rect.top += y
+        self.rect.y += y
         self.rect.x += x
 
 

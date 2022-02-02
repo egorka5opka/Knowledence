@@ -25,15 +25,15 @@ def run(screen, *args, **kwargs):
 
     # fon = pygame.transform.scale(load_image(MAP_BACKGROUND), (WINDOW_WIDTH, WINDOW_HEIGHT))
     fon = load_image(MAP_BACKGROUND)
-    settings_button = Button(SETTINGS_BUTTON, all_sprites, button_sprites, 1380, 10)
-    home_button = Button(HOME_BUTTON, all_sprites, button_sprites, 1462, 10)
-    encyclopedia_button = Button(ENCYCLOPEDIA_BUTTON, all_sprites, button_sprites, 1140, 640)
-    upgrading_button = Button(UPGRADING_BUTTON, all_sprites, button_sprites, 1365, 640)
+    settings_button = Button(SETTINGS_BUTTON,  1380, 10, all_sprites, button_sprites)
+    home_button = Button(HOME_BUTTON, 1462, 10, all_sprites, button_sprites)
+    encyclopedia_button = Button(ENCYCLOPEDIA_BUTTON, 1140, 640, all_sprites, button_sprites)
+    upgrading_button = Button(UPGRADING_BUTTON, 1365, 640, all_sprites, button_sprites)
 
     for i in range(kol):
-        Button(COMPLETE_LEVEL, all_sprites, levels_sprites, coords_levels[i][0], coords_levels[i][1])
+        Button(COMPLETE_LEVEL,  coords_levels[i][0], coords_levels[i][1], all_sprites, levels_sprites)
     if kol != 10:
-        Button(INCOMPLETE_LEVEL, all_sprites, levels_sprites, coords_levels[kol][0], coords_levels[kol][1])
+        Button(INCOMPLETE_LEVEL, coords_levels[kol][0], coords_levels[kol][1], all_sprites, levels_sprites)
 
     screen.blit(fon, (0, 0))
     all_sprites.draw(screen)
@@ -65,8 +65,8 @@ def launch(screen, level):
 
     background = pygame.transform.scale(load_image(LAUNCH_BACKGROUND), (SELF_WIDTH, SELF_HEIGHT))
     map_of_level = pygame.transform.scale(load_image(LEVEL_BACKGROUND.format(level)), (465, 240))
-    play_button = Button(PLAY_BUTTON, all_sprites, button_sprites, (WINDOW_WIDTH - 95) // 2, 550)
-    close_button = Button(CLOSE_BUTTON, all_sprites, button_sprites, 1090, 190)
+    play_button = Button(PLAY_BUTTON, (WINDOW_WIDTH - 95) // 2, 550, all_sprites, button_sprites)
+    close_button = Button(CLOSE_BUTTON,  1090, 190, all_sprites, button_sprites)
 
     screen.blit(background, ((WINDOW_WIDTH - SELF_WIDTH) // 2, (WINDOW_HEIGHT - SELF_HEIGHT) // 2))
     screen.blit(map_of_level, ((WINDOW_WIDTH - SELF_WIDTH) // 2 + 30, (WINDOW_HEIGHT - SELF_HEIGHT) // 2 + 30))

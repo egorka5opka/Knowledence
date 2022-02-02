@@ -20,9 +20,9 @@ def run(screen,  *args, **kwargs):
         print("Не удалось загрузить улучшения: " + str(e))
 
     background = pygame.transform.scale(load_image(UPGRADING_BACKGROUND), (WINDOW_WIDTH, 1719))
-    close_button = Button(CLOSE_BUTTON, all_sprites, button_sprites, 1490, 20)
+    close_button = Button(CLOSE_BUTTON,  1490, 20, all_sprites, button_sprites)
     for i in range(len(coords_upgrading)):
-        Button(UPGRADE_BUTTON, all_sprites, upgrading_button, coords_upgrading[i][0], coords_upgrading[i][1])
+        Button(UPGRADE_BUTTON,  coords_upgrading[i][0], coords_upgrading[i][1], all_sprites, upgrading_button)
 
     up_coord = 0
     screen.blit(background, (0, up_coord))

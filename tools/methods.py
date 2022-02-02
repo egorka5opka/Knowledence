@@ -4,6 +4,7 @@ import csv
 import pygame
 import math
 from const import file_paths
+from const.service import *
 
 
 def load_image(name, colorkey=None):
@@ -25,16 +26,16 @@ def distance(p1, p2):
     return math.sqrt((p1[0] - p2[0]) ** 2 + (p1[1] - p2[1]) ** 2)
 
 
-# принимает путь до файла .enemy с описанием врага, возвращает [текстуру, max_health, velocity, способность летать,
-# сколько жизней снимет, если прошёл, вознаграждение в случае убийства]
-def load_enemy(enemy_file):
+def load_enemy(enemy_file, return_type=0):
     for_exception = (load_image("enemies/monster.png"), 100, 60, False, 1, 8)
     try:
         fin = open(enemy_file)
-        reader = csv.reader(fin, delimiter=";")
-        data = list(reader.__next__())
+        reader = csv.DictReader(fin, delimiter=";")
+        enemy = reader.__next__()
         fin.close()
-        enemy = [load_image(data[0]), int(data[1]), int(data[2]), data[3] == "1", int(data[4]), int(data[5])]
+        if return_type:
+            return [load_image(enemy[IMAGE_PATH]), int(enemy[HEALTH]), int(enemy[VELOCITY]),
+                    enemy[FLYING] == "1", int(enemy[PRICE]), int(enemy[REWARD])]
         return enemy
     except FileNotFoundError:
         print(f"File not found {enemy_file}")
