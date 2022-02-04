@@ -15,7 +15,7 @@ def run(screen,  *args, **kwargs):
     enemies_sprites = pygame.sprite.Group()
 
     level = 0
-    waves, tower_places_sprites, background, lives, pause_btn, money = load_level(all_sprites)
+    waves, tower_places_sprites, background, lives, pause_btn, money = load_level(all_sprites, entities_sprites)
     current_wave = 0
     if not waves:
         return service.MAIN_MENU
@@ -35,7 +35,7 @@ def run(screen,  *args, **kwargs):
             result = waves[current_wave].summon(tick, all_sprites, enemies_sprites, entities_sprites)
             if result == Wave.LAST_ENEMY:
                 current_wave += 1
-        entities_sprites.update(tick)
+        entities_sprites.update(tick, enemies_sprites, entities_sprites, all_sprites)
         for enemy in enemies_sprites:
             if enemy.gone:
                 lives -= enemy.price
@@ -60,7 +60,7 @@ def set_level(x):
         level = x
 
 
-def load_level(all_sprites):
+def load_level(all_sprites, entities_sprites):
     try:
         global in_progress
         in_progress = True
@@ -78,11 +78,11 @@ def load_level(all_sprites):
         for _ in range(cnt_places):
             coords = reader.__next__()
             place = towers.TowerPlace((int(coords[0]), int(coords[1])), all_sprites, tower_places_sprites)
-            if 0 == 0:
+            if _ == 0:
                 x = place.rect.centerx
                 y = place.rect.bottom
                 place.kill()
-                towers.Tower(x, y, all_sprites)
+                towers.Tower(x, y, all_sprites, entities_sprites)
         cnt_ways = int(reader.__next__()[0])
         for _ in range(cnt_ways):
             twist_points = []
@@ -96,8 +96,8 @@ def load_level(all_sprites):
             waves.append(Wave(reader, ways))
         fin.close()
     except Exception as e:
-        print("Не удалось открыть файл data/" + file_paths.LEVEL_DATA.format(level), e)
-        return None, None, None
+        print("Не удалось открыть файл " + file_paths.LEVEL_DATA.format(level), e)
+        return None, None, None, None, None, None
     return waves, tower_places_sprites, background, lives, pause_btn, money
 
 

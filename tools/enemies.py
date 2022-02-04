@@ -42,11 +42,11 @@ class Enemy(pygame.sprite.Sprite):
         self.list_buffs = []
         self.gone = False
 
-    def calc_coords(self):
+    def calc_coords(self, length):
         walked = 0.0
         cur_p = 1
         next_seg = distance(self.way[cur_p], self.way[cur_p - 1])
-        while cur_p < len(self.way) and walked + next_seg <= self.walked:
+        while cur_p < len(self.way) and walked + next_seg <= length:
             walked += next_seg
             cur_p += 1
             if cur_p == len(self.way):
@@ -55,18 +55,19 @@ class Enemy(pygame.sprite.Sprite):
         if cur_p >= len(self.way):
             self.missed()
             return
-        L = self.walked - walked
+        L = length - walked
         angle = math.atan2(self.way[cur_p][1] - self.way[cur_p - 1][1], self.way[cur_p][0] - self.way[cur_p - 1][0])
-        self.rect.bottom = math.sin(angle) * L + self.way[cur_p - 1][1]
-        self.rect.centerx = math.cos(angle) * L + self.way[cur_p - 1][0]
-        self.health_bar.move(self.rect)
+        return math.cos(angle) * L + self.way[cur_p - 1][0], math.sin(angle) * L + self.way[cur_p - 1][1]
 
     def missed(self):
         self.gone = True
 
     def update(self, tick, *args):
         self.walked += self.velocity * self.buffs[VELOCITY_BUFF] * tick / 1000
-        self.calc_coords()
+        x, y = self.calc_coords(self.walked)
+        self.rect.bottom = y
+        self.rect.centerx = x
+        self.health_bar.move(self.rect)
         for_delete = []
         for i in range(len(self.list_buffs)):
             self.list_buffs[i][2] -= tick
@@ -82,6 +83,9 @@ class Enemy(pygame.sprite.Sprite):
                 continue
             buffs.append(self.list_buffs[i])
         self.list_buffs = buffs
+
+    def will_walk(self, time):
+        return self.walked + self.velocity * self.buffs[VELOCITY_BUFF] * time
 
     def impact(self, hp_impact=0, *buffs):
         if hp_impact < 0:

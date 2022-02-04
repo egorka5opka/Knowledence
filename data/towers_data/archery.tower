@@ -1,2 +1,2 @@
-image;columns;rows;damage;price;speed;air;damage_buff;velocity_buff;bullet_image;bullet_velocity
-towers_data/archery_tower.png;2;1;12;60;1;1;0;0;towers_data/arrow.png;100
+image;columns;rows;damage;price;speed;air;damage_buff;velocity_buff;bullet_image;bullet_velocity;radius
+towers_data/archery_tower.png;2;1;12;60;1;1;0;0;towers_data/arrow.png;500;300

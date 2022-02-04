@@ -23,8 +23,8 @@ levels_data/0.bkg
 850;650
 1024;490
 1580;480
-2; number of waves in the level
+1; number of waves in the level
 1;0
-base_enemy;5;1
+base_enemy;1;1
 1;10000
 base_enemy;3;1
