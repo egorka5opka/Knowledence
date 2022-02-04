@@ -53,6 +53,7 @@ class Bullet(pygame.sprite.Sprite):
         self.velocity1 = velocity
         self.image = img
         self.image = pygame.transform.rotate(self.image, radians_to_degrees(-angle))
+        self.mask = pygame.mask.from_surface(self.image)
         self.rect = self.image.get_rect()
         self.rect.center = start
         self.coords = list(start)
@@ -66,5 +67,9 @@ class Bullet(pygame.sprite.Sprite):
         self.coords[1] += self.velocity[1] * tick / 1000
         self.flew += self.velocity1 * tick / 1000
         self.rect.center = self.coords
+        for enemy in enemies:
+            if pygame.sprite.collide_mask(enemy, self):
+                enemy.impact(-self.damage)
+                self.kill()
         if self.flew >= self.radius:
             self.kill()

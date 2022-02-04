@@ -37,6 +37,10 @@ def run(screen,  *args, **kwargs):
                 current_wave += 1
         entities_sprites.update(tick, enemies_sprites, entities_sprites, all_sprites)
         for enemy in enemies_sprites:
+            if enemy.hp <= 0:
+                money += enemy.reward
+                enemy.health_bar.kill()
+                enemy.kill()
             if enemy.gone:
                 lives -= enemy.price
                 enemy.kill()

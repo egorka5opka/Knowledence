@@ -41,6 +41,7 @@ class Enemy(pygame.sprite.Sprite):
         self.health_bar = HealthBar(self.hp, args[0])
         self.list_buffs = []
         self.gone = False
+        self.mask = pygame.mask.from_surface(self.image)
 
     def calc_coords(self, length):
         walked = 0.0
@@ -91,7 +92,7 @@ class Enemy(pygame.sprite.Sprite):
         if hp_impact < 0:
             hp_impact *= self.buffs[DAMAGE_BUFF]
         self.hp += hp_impact
-        self.hp = min(self.hp, self.max_health)
+        self.hp = max(min(self.hp, self.max_health), 0)
         for b in buffs:
             self.buffs[b[0]] += b[1]
             self.list_buffs.append(list(b))
