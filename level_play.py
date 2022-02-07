@@ -15,7 +15,7 @@ def run(screen,  *args, **kwargs):
     enemies_sprites = pygame.sprite.Group()
 
     level = 0
-    waves, tower_places_sprites, background, lives, pause_btn, money = load_level(all_sprites, entities_sprites)
+    waves, tower_places_sprites, background, lives, pause_btn, money, panel = load_level(all_sprites, entities_sprites)
     current_wave = 0
     if not waves:
         return service.MAIN_MENU
@@ -31,6 +31,7 @@ def run(screen,  *args, **kwargs):
                 if pause_btn.get_click(*event.pos):
                     running = pause(screen)
                     clock.tick()
+                panel.on_click(event.pos)
         if current_wave < len(waves):
             result = waves[current_wave].summon(tick, all_sprites, enemies_sprites, entities_sprites)
             if result == Wave.LAST_ENEMY:
@@ -49,6 +50,7 @@ def run(screen,  *args, **kwargs):
                     running = service.QUIT()
                     break
         all_sprites.draw(screen)
+        panel.draw(screen)
         pygame.display.flip()
     in_progress = False
     return running
@@ -73,11 +75,14 @@ def load_level(all_sprites, entities_sprites):
         waves = []
         fin = open(file_paths.LEVEL_DATA.format(level))
         reader = csv.reader(fin, delimiter=";")
+
         bckg_file = reader.__next__()[0]
         background = classes.Background(bckg_file, all_sprites)
         lives = interface.Lives(int(reader.__next__()[0]), all_sprites)
         money = interface.Money(int(reader.__next__()[0]), all_sprites)
         pause_btn = classes.Button(file_paths.PAUSE_BUTTON, *sizes.PAUSE_POS, all_sprites)
+        panel = interface.Panel()
+
         cnt_places = int(reader.__next__()[0])
         for _ in range(cnt_places):
             coords = reader.__next__()
@@ -102,7 +107,7 @@ def load_level(all_sprites, entities_sprites):
     except Exception as e:
         print("Не удалось открыть файл " + file_paths.LEVEL_DATA.format(level), e)
         return None, None, None, None, None, None
-    return waves, tower_places_sprites, background, lives, pause_btn, money
+    return waves, tower_places_sprites, background, lives, pause_btn, money, panel
 
 
 class Wave:

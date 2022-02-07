@@ -1,6 +1,6 @@
 levels_data/0.bkg
 10; lives
-8888; start money
+120; start money
 9; tower_places
 400;140
 260;220
@@ -23,8 +23,8 @@ levels_data/0.bkg
 850;650
 1024;490
 1580;480
-1; number of waves in the level
+2; number of waves in the level
 1;0
-base_enemy;1;1
+base_enemy;5;1
 1;10000
 base_enemy;3;1

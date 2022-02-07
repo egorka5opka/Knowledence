@@ -34,12 +34,17 @@ class Tower(pygame.sprite.Sprite):
             self.delay -= tick
         if self.delay <= 0:
             enemy = None
-            dist = 0
+            walked = 0
             for e in enemies:
-                if not enemy or dist > tower_dist(*self.attack_centre, e.rect):
+                if (not enemy or walked < e.walked)\
+                        and tower_dist(*self.attack_centre, e.rect) <= self.attack_radius ** 2:
                     enemy = e
-                    dist = tower_dist(*self.attack_centre, e.rect)
-            if enemy and dist <= self.attack_radius ** 2:
+                    walked = e.walked
+            if enemy and tower_dist(*self.attack_centre, enemy.rect) <= self.attack_radius ** 2:
+                if len(self.frames) > 1 and enemy.rect.centerx <= self.rect.centerx:
+                    self.image = self.frames[0]
+                else:
+                    self.image = self.frames[1]
                 self.attack(enemy, entities, all_sprites)
                 self.delay = self.next_attack_time()
 
@@ -48,7 +53,8 @@ class Tower(pygame.sprite.Sprite):
 
     def attack(self, enemy, entities, all_sprites):
         Bullet(self.bullet_img, self.bullet_velocity, self.damage, self.rect.center, enemy,
-               self.attack_radius, entities, all_sprites)
+               self.attack_radius + 100, entities, all_sprites)
 
 
+tower_classes = {"archery": Tower}
 
