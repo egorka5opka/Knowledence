@@ -3,6 +3,7 @@ import pygame
 from tools.methods import load_image, radians_to_degrees, distance
 from math import sin, cos, atan2
 
+
 class SupportCursor(pygame.sprite.Sprite):
     def __init__(self, coordx, coordy):
         super().__init__()

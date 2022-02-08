@@ -34,6 +34,9 @@ def run(screen,  *args, **kwargs):
                     running = pause(screen)
                     clock.tick()
                 panel.on_click(event.pos)
+                for place in tower_places_sprites:
+                    place.click(event.pos,
+                                lambda p: panel.set_building(p, towers_sprites, entities_sprites, all_sprites))
         if current_wave < len(waves):
             result = waves[current_wave].summon(tick, all_sprites, enemies_sprites, entities_sprites)
             if result == Wave.LAST_ENEMY:
@@ -88,7 +91,7 @@ def load_level(all_sprites, entities_sprites):
         cnt_places = int(reader.__next__()[0])
         for _ in range(cnt_places):
             coords = reader.__next__()
-            place = towers.TowerPlace((int(coords[0]), int(coords[1])), all_sprites, tower_places_sprites)
+            towers.TowerPlace((int(coords[0]), int(coords[1])), all_sprites, tower_places_sprites)
         cnt_ways = int(reader.__next__()[0])
         for _ in range(cnt_ways):
             twist_points = []

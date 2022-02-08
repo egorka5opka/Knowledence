@@ -1,6 +1,6 @@
 import pygame
 from tools.methods import load_image, load_tower, tower_dist
-from tools.classes import Bullet
+from tools.classes import Bullet, SupportCursor
 from const import service, file_paths
 import math
 
@@ -14,10 +14,17 @@ class TowerPlace(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.center = center
 
+    def click(self, cords, set_building):
+        click = SupportCursor(*cords)
+        res = bool(pygame.sprite.collide_rect(self, click))
+        click.kill()
+        if res:
+            set_building(self)
+
 
 class Tower(pygame.sprite.Sprite):
     frames, base_damage, price, attack_speed, air, damage_buf, velocity_buf, buffs_time, bullet_img, bullet_velocity,\
-        base_attack_radius = load_tower(file_paths.ARCHERY_TOWER, 1)
+        base_attack_radius, icon = load_tower(file_paths.ARCHERY_TOWER, 1)
 
     def __init__(self, x, y, *groups):
         super().__init__(*groups)
@@ -32,6 +39,7 @@ class Tower(pygame.sprite.Sprite):
         self.upgrade_price = int(self.cost * 1.8)
         self.damage = self.base_damage
         self.attack_radius = self.base_attack_radius
+
 
     def update(self, tick, enemies, entities, all_sprites, *args):
         if self.delay > 0:
