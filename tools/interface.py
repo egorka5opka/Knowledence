@@ -10,6 +10,7 @@ class Lives(pygame.sprite.Sprite):
     def __init__(self, points, *args):
         super().__init__(*args)
         self.points = points
+        self.start_points = points
         self.display_lives()
         self.rect = self.image.get_rect()
         self.rect = self.rect.move(sizes.LIVES_POS)

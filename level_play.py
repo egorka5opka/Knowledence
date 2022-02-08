@@ -68,6 +68,10 @@ def gameover():
     pass
 
 
+def victory():
+    pass
+
+
 def set_level(x):
     global level
     if not in_progress:
