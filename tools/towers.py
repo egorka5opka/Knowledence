@@ -16,7 +16,7 @@ class TowerPlace(pygame.sprite.Sprite):
 
 
 class Tower(pygame.sprite.Sprite):
-    frames, base_damage, price, attack_speed, air, damage_buf, velocity_buf, bullet_img, bullet_velocity,\
+    frames, base_damage, price, attack_speed, air, damage_buf, velocity_buf, buffs_time, bullet_img, bullet_velocity,\
         base_attack_radius = load_tower(file_paths.ARCHERY_TOWER, 1)
 
     def __init__(self, x, y, *groups):
@@ -56,7 +56,8 @@ class Tower(pygame.sprite.Sprite):
         return int(1 / self.attack_speed * self.buffs[service.ATTACK_SPEED_BUFF] * 1000)
 
     def attack(self, enemy, entities, all_sprites):
-        buffs = [(service.VELOCITY_BUFF, self.velocity_buf, 5 * 1000), (service.DAMAGE_BUFF, self.damage_buf, 5 * 1000)]
+        buffs = [(service.VELOCITY_BUFF, self.velocity_buf, self.buffs_time),
+                 (service.DAMAGE_BUFF, self.damage_buf, self.buffs_time)]
         Bullet(self.bullet_img, self.bullet_velocity, self.damage, self.rect.center, enemy,
                self.attack_radius + 100, buffs, entities, all_sprites)
 
