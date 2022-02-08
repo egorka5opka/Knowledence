@@ -3,7 +3,7 @@ import os
 import csv
 import pygame
 import math
-from const import file_paths
+from const import file_paths, sizes, colors
 from const.service import *
 
 
@@ -94,8 +94,18 @@ def radians_to_degrees(rad):
     return rad / math.pi * 180
 
 
-def build_tower(tower_class, tower_place, *groups):
+def build_tower(tower_class, tower_place, money, *groups):
+    if money.get_money() < tower_class.price:
+        return
     x = tower_place.rect.centerx
     y = tower_place.rect.bottom
     tower_class(x, y, *groups)
     tower_place.kill()
+    money -= tower_class.price
+
+
+def get_price_img(n):
+    size = sizes.price_size
+    font = pygame.font.Font(None, size[1])
+    text = font.render(str(n), True, colors.TEXT)
+    return text

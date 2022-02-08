@@ -118,18 +118,24 @@ class Panel:
     def get_click(self, pos):
         item = self.cells[pos[0]][pos[1]]
         item[1]()
+        self.clear()
 
     def clear(self):
         for i in range(self.width):
             for j in range(self.height):
                 self.cells[i][j] = self.none_item
 
-    def set_building(self, tower_place, towers_sprites, entities_sprites, all_sprites):
+    def set_building(self, tower_place, towers_sprites, entities_sprites, all_sprites, money):
         i, j = 0, 0
         for tow in towers.tower_classes.values():
             self.set_item(i, j, tow.icon,
-                          lambda: methods.build_tower(tow, tower_place, towers_sprites, entities_sprites, all_sprites))
+                          lambda: methods.build_tower(tow, tower_place, money, towers_sprites,
+                                                      entities_sprites, all_sprites))
             i += 1
             if i == self.width:
                 i = 0
                 j += 1
+
+    def set_tower_panel(self, tower):
+        pass
+

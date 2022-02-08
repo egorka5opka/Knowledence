@@ -21,7 +21,7 @@ def run(screen,  *args, **kwargs):
         return service.MAIN_MENU
     running = service.LEVEL_PLAY
     clock = pygame.time.Clock()
-    methods.build_tower(towers.Tower, tower_places_sprites.sprites()[0],
+    methods.build_tower(towers.Tower, tower_places_sprites.sprites()[0], money,
                         towers_sprites, all_sprites, entities_sprites)
     while running == service.LEVEL_PLAY:
         tick = clock.tick()
@@ -36,7 +36,7 @@ def run(screen,  *args, **kwargs):
                 panel.on_click(event.pos)
                 for place in tower_places_sprites:
                     place.click(event.pos,
-                                lambda p: panel.set_building(p, towers_sprites, entities_sprites, all_sprites))
+                                lambda p: panel.set_building(p, towers_sprites, entities_sprites, all_sprites, money))
         if current_wave < len(waves):
             result = waves[current_wave].summon(tick, all_sprites, enemies_sprites, entities_sprites)
             if result == Wave.LAST_ENEMY:
