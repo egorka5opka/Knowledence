@@ -56,10 +56,14 @@ def load_tower(tower_file, return_type=0,):
         fin.close()
         frames = cut_sheet(load_image(tower[IMAGE_PATH]), int(tower["columns"]), int(tower["rows"]))
         if return_type:
+            time = -1
+            if BULLET_TIME in tower:
+                time = float(tower[BULLET_TIME])
+                print(time)
             return [frames, int(tower[DAMAGE]), int(tower[PRICE]), int(tower[ATTACK_SPEED]), tower[ATTACK_AIR] == "1",
                     float(tower[TOWER_DAMAGE_BUFF]), float(tower[TOWER_VELOCITY_BUFF]), float(tower[TOWER_BUFFS_TIME])
                     * 1000, load_image(tower[BULLET_IMAGE]), int(tower[BULLET_VELOCITY]), int(tower[ATTACK_RADIUS]),
-                    load_image(tower[TOWER_ICON])]
+                    load_image(tower[TOWER_ICON]), time * 1000]
         return tower
     except FileNotFoundError:
         print(f"File not found {tower_file}")
