@@ -57,7 +57,7 @@ def load_tower(tower_file, return_type=0,):
         frames = cut_sheet(load_image(tower[IMAGE_PATH]), int(tower["columns"]), int(tower["rows"]))
         if return_type:
             return [frames, int(tower[DAMAGE]), int(tower[PRICE]), int(tower[ATTACK_SPEED]),
-                    tower[ATTACK_AIR] == "1", int(tower[TOWER_DAMAGE_BUFF]), int(tower[TOWER_VELOCITY_BUFF]),
+                    tower[ATTACK_AIR] == "1", float(tower[TOWER_DAMAGE_BUFF]), float(tower[TOWER_VELOCITY_BUFF]),
                     load_image(tower[BULLET_IMAGE]), int(tower[BULLET_VELOCITY]), int(tower[ATTACK_RADIUS])]
         return tower
     except FileNotFoundError:
@@ -91,3 +91,10 @@ def tower_dist(x, y, b):
 
 def radians_to_degrees(rad):
     return rad / math.pi * 180
+
+
+def build_tower(tower_class, tower_place, *groups):
+    x = tower_place.rect.centerx
+    y = tower_place.rect.bottom
+    tower_class(x, y, *groups)
+    tower_place.kill()

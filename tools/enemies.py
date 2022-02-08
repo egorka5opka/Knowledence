@@ -94,6 +94,8 @@ class Enemy(pygame.sprite.Sprite):
         self.hp += hp_impact
         self.hp = max(min(self.hp, self.max_health), 0)
         for b in buffs:
+            if b[1] == 0:
+                continue
             self.buffs[b[0]] += b[1]
             self.list_buffs.append(list(b))
         self.health_bar.update_health(self.hp)

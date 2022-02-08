@@ -41,7 +41,7 @@ class Background(pygame.sprite.Sprite):
 
 
 class Bullet(pygame.sprite.Sprite):
-    def __init__(self, img, velocity, damage, start, enemy, radius, *groups):
+    def __init__(self, img, velocity, damage, start, enemy, radius, buffs, *groups):
         super().__init__(*groups)
         dist = distance(start, enemy.rect.center)
         finish = list(enemy.calc_coords(enemy.will_walk(dist / velocity)))
@@ -61,6 +61,7 @@ class Bullet(pygame.sprite.Sprite):
         self.fin = finish
         self.radius = radius
         self.flew = 0
+        self.buffs = buffs
 
     def update(self, tick, enemies, *args):
         self.coords[0] += self.velocity[0] * tick / 1000
@@ -69,7 +70,7 @@ class Bullet(pygame.sprite.Sprite):
         self.rect.center = self.coords
         for enemy in enemies:
             if pygame.sprite.collide_mask(enemy, self):
-                enemy.impact(-self.damage)
+                enemy.impact(-self.damage, *self.buffs)
                 self.kill()
         if self.flew >= self.radius:
             self.kill()

@@ -1,7 +1,7 @@
 levels_data/0.bkg
 10; lives
 120; start money
-9; tower_places
+8; tower_places
 400;140
 260;220
 540;345
@@ -9,7 +9,6 @@ levels_data/0.bkg
 600;470
 820;480
 660;680
-1090;585
 1340;340
 1; number of possible enemies' ways
 10; number of point in the way

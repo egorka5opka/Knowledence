@@ -21,6 +21,8 @@ def run(screen,  *args, **kwargs):
         return service.MAIN_MENU
     running = service.LEVEL_PLAY
     clock = pygame.time.Clock()
+    methods.build_tower(towers.Tower, tower_places_sprites.sprites()[0],
+                        towers_sprites, all_sprites, entities_sprites)
     while running == service.LEVEL_PLAY:
         tick = clock.tick()
         for event in pygame.event.get():
@@ -87,11 +89,6 @@ def load_level(all_sprites, entities_sprites):
         for _ in range(cnt_places):
             coords = reader.__next__()
             place = towers.TowerPlace((int(coords[0]), int(coords[1])), all_sprites, tower_places_sprites)
-            if _ == 0:
-                x = place.rect.centerx
-                y = place.rect.bottom
-                place.kill()
-                towers.Tower(x, y, all_sprites, entities_sprites)
         cnt_ways = int(reader.__next__()[0])
         for _ in range(cnt_ways):
             twist_points = []

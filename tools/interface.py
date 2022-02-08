@@ -116,7 +116,6 @@ class Panel:
         return i, j
 
     def get_click(self, pos):
-        print(pos)
         item = self.cells[pos[0]][pos[1]]
         if not item[1]:
             return
