@@ -106,6 +106,6 @@ def build_tower(tower_class, tower_place, money, *groups):
 
 def get_price_img(n):
     size = sizes.price_size
-    font = pygame.font.Font(None, size[1])
+    font = pygame.font.Font(None, size[1] + 10)
     text = font.render(str(n), True, colors.TEXT)
     return text

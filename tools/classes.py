@@ -42,7 +42,7 @@ class Background(pygame.sprite.Sprite):
 
 
 class Bullet(pygame.sprite.Sprite):
-    def __init__(self, img, velocity, damage, start, enemy, radius, buffs, *groups):
+    def __init__(self, img, velocity, damage, start, enemy, radius, buffs, *groups, time=-1):
         super().__init__(*groups)
         dist = distance(start, enemy.rect.center)
         finish = list(enemy.calc_coords(enemy.will_walk(dist / velocity)))
@@ -63,8 +63,10 @@ class Bullet(pygame.sprite.Sprite):
         self.radius = radius
         self.flew = 0
         self.buffs = buffs
+        self.time = time
 
     def update(self, tick, enemies, *args):
+        self.time = 1
         self.coords[0] += self.velocity[0] * tick / 1000
         self.coords[1] += self.velocity[1] * tick / 1000
         self.flew += self.velocity1 * tick / 1000

@@ -37,6 +37,9 @@ def run(screen,  *args, **kwargs):
                 for place in tower_places_sprites:
                     place.click(event.pos,
                                 lambda p: panel.set_building(p, towers_sprites, entities_sprites, all_sprites, money))
+                for tower in towers_sprites:
+                    tower.click(event.pos, lambda t: panel.set_tower_panel(t, money, tower_places_sprites,
+                                                                           entities_sprites, all_sprites))
         if current_wave < len(waves):
             result = waves[current_wave].summon(tick, all_sprites, enemies_sprites, entities_sprites)
             if result == Wave.LAST_ENEMY:
@@ -162,6 +165,7 @@ def pause(screen):
     screen.blit(menu, (menux, menuy))
     pygame.display.flip()
     while running == service.PAUSE:
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = service.QUIT

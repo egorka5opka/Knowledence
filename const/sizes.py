@@ -5,4 +5,4 @@ PAUSE_POS = 1480, 10
 LIVES_POS = 10, 10
 MONEY_POS = 150, 10
 RES_FONT_SIZE = 57
-price_size = (50, 30)
+price_size = (33, 28)
