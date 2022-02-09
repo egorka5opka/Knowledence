@@ -58,10 +58,11 @@ class Tower(pygame.sprite.Sprite):
                     enemy = e
                     walked = e.walked
             if enemy and tower_dist(*self.attack_centre, enemy.rect) <= self.attack_radius ** 2:
-                if len(self.frames) > 1 and enemy.rect.centerx <= self.rect.centerx:
-                    self.image = self.frames[0]
-                else:
-                    self.image = self.frames[1]
+                if len(self.frames) > 1:
+                    if enemy.rect.centerx <= self.rect.centerx:
+                        self.image = self.frames[0]
+                    else:
+                        self.image = self.frames[1]
                 self.attack(enemy, entities, all_sprites)
                 self.delay = self.next_attack_time()
 
@@ -99,4 +100,9 @@ class Tower(pygame.sprite.Sprite):
         self.kill()
 
 
-tower_classes = {"archery": Tower}
+class Cannon(Tower):
+    frames, base_damage, price, attack_speed, air, damage_buf, velocity_buf, buffs_time, bullet_img, bullet_velocity, \
+        base_attack_radius, icon, bullet_time = load_tower("data/towers_data/cannon.tower", 1)
+
+
+tower_classes = {"archery": Tower, "cannon": Cannon}

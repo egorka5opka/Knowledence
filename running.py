@@ -15,7 +15,7 @@ def main():
                service.UPGRADING: upgrading.run}
     # функция run обрабатывает одну активность и возвращает какая активность будет следующей
     cur_action = service.START_MENU
-    cur_action = service.LEVEL_PLAY
+    # cur_action = service.LEVEL_PLAY
     while cur_action != service.QUIT:
         cur_action = actions[cur_action](screen)
 
