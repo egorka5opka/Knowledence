@@ -55,7 +55,7 @@ class Enemy(pygame.sprite.Sprite):
             next_seg = distance(self.way[cur_p], self.way[cur_p - 1])
         if cur_p >= len(self.way):
             self.missed()
-            return
+            return self.rect.centerx, self.rect.bottom
         L = length - walked
         angle = math.atan2(self.way[cur_p][1] - self.way[cur_p - 1][1], self.way[cur_p][0] - self.way[cur_p - 1][0])
         return math.cos(angle) * L + self.way[cur_p - 1][0], math.sin(angle) * L + self.way[cur_p - 1][1]
