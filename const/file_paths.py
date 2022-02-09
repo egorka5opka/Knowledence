@@ -29,3 +29,5 @@ UPGRADE_ICON = "upd_icon.png"
 WIN_LABEL = 'win.png'
 DEFEAT_LABEL = 'defeat.png'
 SHOW_LEVEL = 'show_level.png'
+FILLED_STAR = 'filled_star.png'
+EMPTY_STAR = 'empty_star.png'

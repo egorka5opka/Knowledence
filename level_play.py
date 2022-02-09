@@ -44,7 +44,7 @@ def run(screen,  *args, **kwargs):
             if result == Wave.LAST_ENEMY:
                 current_wave += 1
         elif not len(enemies_sprites):
-            victory(screen)
+            victory(screen, lives)
             running = service.MAIN_MENU
             continue
         entities_sprites.update(tick, enemies_sprites, entities_sprites, all_sprites)
@@ -72,6 +72,11 @@ def gameover(screen):
     all_sprites = pygame.sprite.Group()
     background = pygame.transform.scale(load_image(file_paths.LAUNCH_BACKGROUND), (SELF_WIDTH, SELF_HEIGHT))
     classes.Button(file_paths.DEFEAT_LABEL, 641, 295, all_sprites)
+
+    classes.Button(file_paths.EMPTY_STAR, 646, 207, all_sprites)
+    classes.Button(file_paths.EMPTY_STAR, 735, 194, all_sprites)
+    classes.Button(file_paths.EMPTY_STAR, 824, 207, all_sprites)
+
     go_main = classes.Button(file_paths.EXIT_LEVEL_BTN, 566, 405, all_sprites)
     show_butt = classes.Button(file_paths.SHOW_LEVEL, 566, 505, all_sprites)
     screen.blit(background, ((sizes.WINDOW_WIDTH - SELF_WIDTH) // 2, (sizes.WINDOW_HEIGHT - SELF_HEIGHT) // 2))
@@ -88,7 +93,7 @@ def gameover(screen):
         pygame.display.flip()
 
 
-def victory(screen):
+def victory(screen, lives):
     global level
 
     reading = open("data/progress.txt", mode='r')
@@ -106,6 +111,19 @@ def victory(screen):
     all_sprites = pygame.sprite.Group()
     background = pygame.transform.scale(load_image(file_paths.LAUNCH_BACKGROUND), (SELF_WIDTH, SELF_HEIGHT))
     classes.Button(file_paths.WIN_LABEL, 641, 295, all_sprites)
+
+    if lives.start_points * 0.7 <= lives.get_points():
+        classes.Button(file_paths.FILLED_STAR, 646, 207, all_sprites)
+        classes.Button(file_paths.FILLED_STAR, 735, 194, all_sprites)
+        classes.Button(file_paths.FILLED_STAR, 824, 207, all_sprites)
+    elif lives.start_points * 0.4 <= lives.get_points():
+        classes.Button(file_paths.FILLED_STAR, 646, 207, all_sprites)
+        classes.Button(file_paths.FILLED_STAR, 735, 194, all_sprites)
+        classes.Button(file_paths.EMPTY_STAR, 824, 207, all_sprites)
+    else:
+        classes.Button(file_paths.FILLED_STAR, 646, 207, all_sprites)
+        classes.Button(file_paths.EMPTY_STAR, 735, 194, all_sprites)
+        classes.Button(file_paths.EMPTY_STAR, 824, 207, all_sprites)
 
     go_main = classes.Button(file_paths.EXIT_LEVEL_BTN, 566, 405, all_sprites)
     show_butt = classes.Button(file_paths.SHOW_LEVEL, 566, 505, all_sprites)
