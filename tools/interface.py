@@ -98,12 +98,12 @@ class Panel:
                            (i * border_cell_size + self.border_size, j * border_cell_size + self.border_size))
         screen.blit(panel, cords)
 
-    def set_item(self, i, j, img, func, price):
+    def set_item(self, i, j, img, func, price, cl=None):
         img = pygame.transform.scale(img, (self.cell_size, self.cell_size))
         price_img = methods.get_price_img(price)
         price_x, price_y = self.cell_size - price_img.get_width(), self.cell_size - price_img.get_height()
         img.blit(price_img, (price_x, price_y))
-        self.cells[i][j] = img, func
+        self.cells[i][j] = img, func, cl
 
     def on_click(self, cords):
         pos = self.get_pos(cords)
@@ -123,7 +123,7 @@ class Panel:
 
     def get_click(self, pos):
         item = self.cells[pos[0]][pos[1]]
-        item[1]()
+        methods.build_tower(*item[1])
         self.clear()
 
     def clear(self):
@@ -134,10 +134,9 @@ class Panel:
     def set_building(self, tower_place, towers_sprites, entities_sprites, all_sprites, money):
         self.clear()
         i, j = 0, 0
-        for tow in towers.tower_classes.values():
+        for tow in towers.tower_classes:
             self.set_item(i, j, tow.icon,
-                          lambda: methods.build_tower(tow, tower_place, money, towers_sprites,
-                                                      entities_sprites, all_sprites), tow.price)
+                          (tow, tower_place, money, towers_sprites, entities_sprites, all_sprites), tow.price, tow)
             i += 1
             if i == self.width:
                 i = 0
