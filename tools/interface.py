@@ -143,7 +143,7 @@ class Panel:
                 j += 1
 
     def set_tower_panel(self, tower, money, *place_groups):
-        self.set_item(0, 0, self.upgrade_icon, lambda: tower.upgrade(money), tower.upgrade_price)
+        self.set_item(0, 0, self.upgrade_icon, (tower.upgrade, money), tower.upgrade_price)
         self.set_item(self.width - 1, self.height - 1, self.sell_icon, (tower.sell, money, *place_groups),
                       int(tower.cost * 0.7))
 
