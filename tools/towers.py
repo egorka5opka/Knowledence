@@ -23,12 +23,6 @@ class TowerPlace(pygame.sprite.Sprite):
 
 
 class Tower(pygame.sprite.Sprite):
-    frames, base_damage, price, attack_speed, air, damage_buf, velocity_buf, buffs_time, bullet_img, bullet_velocity,\
-        base_attack_radius, icon, bullet_time = load_tower(file_paths.ARCHERY_TOWER, 1)
-    damage_upgrade = 2.5
-    speed_upgrade = 1.1
-    damage_buf_upgrade = 1
-    velocity_buf_upgrade = 1
 
     def __init__(self, x, y, *groups):
         super().__init__(*groups)
@@ -103,6 +97,19 @@ class Tower(pygame.sprite.Sprite):
 class Cannon(Tower):
     frames, base_damage, price, attack_speed, air, damage_buf, velocity_buf, buffs_time, bullet_img, bullet_velocity, \
         base_attack_radius, icon, bullet_time = load_tower("data/towers_data/cannon.tower", 1)
+    damage_upgrade = 2.5
+    speed_upgrade = 1.1
+    damage_buf_upgrade = 1
+    velocity_buf_upgrade = 1
 
 
-tower_classes = {"archery": Tower, "cannon": Cannon}
+class Archery(Tower):
+    frames, base_damage, price, attack_speed, air, damage_buf, velocity_buf, buffs_time, bullet_img, bullet_velocity, \
+        base_attack_radius, icon, bullet_time = load_tower("data/towers_data/archery.tower", 1)
+    damage_upgrade = 2.5
+    speed_upgrade = 1.1
+    damage_buf_upgrade = 1
+    velocity_buf_upgrade = 1
+
+
+tower_classes = (Archery, Cannon)

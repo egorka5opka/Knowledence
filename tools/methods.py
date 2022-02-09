@@ -101,6 +101,7 @@ def radians_to_degrees(rad):
 
 
 def build_tower(tower_class, tower_place, money, *groups):
+    print(tower_class)
     if money.get_money() < tower_class.price:
         return
     x = tower_place.rect.centerx

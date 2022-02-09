@@ -15,7 +15,6 @@ def run(screen,  *args, **kwargs):
     towers_sprites = pygame.sprite.Group()
     enemies_sprites = pygame.sprite.Group()
 
-    level = 0
     waves, tower_places_sprites, background, lives, pause_btn, money, panel = load_level(all_sprites, entities_sprites)
     current_wave = 0
     if not waves:
