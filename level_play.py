@@ -21,8 +21,6 @@ def run(screen,  *args, **kwargs):
         return service.MAIN_MENU
     running = service.LEVEL_PLAY
     clock = pygame.time.Clock()
-    methods.build_tower(towers.Tower, tower_places_sprites.sprites()[0], money,
-                        towers_sprites, all_sprites, entities_sprites)
     while running == service.LEVEL_PLAY:
         tick = clock.tick()
         for event in pygame.event.get():
@@ -44,6 +42,10 @@ def run(screen,  *args, **kwargs):
             result = waves[current_wave].summon(tick, all_sprites, enemies_sprites, entities_sprites)
             if result == Wave.LAST_ENEMY:
                 current_wave += 1
+        elif not len(enemies_sprites):
+            victory()
+            running = service.MAIN_MENU
+            continue
         entities_sprites.update(tick, enemies_sprites, entities_sprites, all_sprites)
         for enemy in enemies_sprites:
             if enemy.hp <= 0:
@@ -69,6 +71,7 @@ def gameover():
 
 
 def victory():
+    print("YEP")
     pass
 
 
