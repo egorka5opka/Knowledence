@@ -34,7 +34,10 @@ def load_enemy(enemy_file, return_type=0):
         enemy = reader.__next__()
         fin.close()
         if return_type:
-            return [load_image(enemy[IMAGE_PATH]), int(enemy[HEALTH]), int(enemy[VELOCITY]),
+            frames1 = cut_sheet(load_image(enemy[IMAGE_PATH]), int(enemy["columns"]), int(enemy["rows"]))
+            frames = [frames1, [pygame.transform.flip(f, True, False) for f in frames1.copy()]]
+            print(frames)
+            return [frames, int(enemy[HEALTH]), int(enemy[VELOCITY]),
                     enemy[FLYING] == "1", int(enemy[PRICE]), int(enemy[REWARD])]
         return enemy
     except FileNotFoundError:

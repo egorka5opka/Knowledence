@@ -22,6 +22,7 @@ def run(screen,  *args, **kwargs):
         return service.MAIN_MENU
     running = service.LEVEL_PLAY
     clock = pygame.time.Clock()
+    was_victory = False
     while running == service.LEVEL_PLAY:
         tick = clock.tick()
         for event in pygame.event.get():
@@ -32,6 +33,8 @@ def run(screen,  *args, **kwargs):
                 if pause_btn.get_click(*event.pos):
                     running = pause(screen)
                     clock.tick()
+                if was_victory:
+                    continue
                 panel.on_click(event.pos)
                 for place in tower_places_sprites:
                     place.click(event.pos,
@@ -43,9 +46,9 @@ def run(screen,  *args, **kwargs):
             result = waves[current_wave].summon(tick, all_sprites, enemies_sprites, entities_sprites)
             if result == Wave.LAST_ENEMY:
                 current_wave += 1
-        elif not len(enemies_sprites):
+        elif not len(enemies_sprites) and not was_victory:
             victory(screen, lives)
-            running = service.MAIN_MENU
+            was_victory = True
             continue
         entities_sprites.update(tick, enemies_sprites, entities_sprites, all_sprites)
         for enemy in enemies_sprites:

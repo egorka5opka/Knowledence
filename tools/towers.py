@@ -26,7 +26,7 @@ class Tower(pygame.sprite.Sprite):
     frames, base_damage, price, attack_speed, air, damage_buf, velocity_buf, buffs_time, bullet_img, bullet_velocity,\
         base_attack_radius, icon, bullet_time = load_tower(file_paths.ARCHERY_TOWER, 1)
     damage_upgrade = 2.5
-    speed_upgrade = 1.5
+    speed_upgrade = 1.1
     damage_buf_upgrade = 1
     velocity_buf_upgrade = 1
 

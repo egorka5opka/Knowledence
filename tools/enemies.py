@@ -28,11 +28,15 @@ class HealthBar(pygame.sprite.Sprite):
 
 
 class Enemy(pygame.sprite.Sprite):
-    enemy_image, max_health, velocity, flying, price, reward = load_enemy(file_paths.BASE_ENEMY, 1)
+    file_name = file_paths.BASE_ENEMY
+    frames, max_health, velocity, flying, price, reward = load_enemy(file_name, 1)
+    frame_time = 200
 
     def __init__(self, way_points, *args):
         super().__init__(*args)
-        self.image = self.enemy_image
+        self.frame = 0
+        self.image = self.frames[0][0]
+        self.next_frame = self.frame_time
         self.rect = self.image.get_rect()
         self.buffs = {VELOCITY_BUFF: 1, DAMAGE_BUFF: 1, FLY_ABILITY: self.flying}
         self.hp = self.max_health
@@ -58,14 +62,15 @@ class Enemy(pygame.sprite.Sprite):
             return self.rect.centerx, self.rect.bottom
         L = length - walked
         angle = math.atan2(self.way[cur_p][1] - self.way[cur_p - 1][1], self.way[cur_p][0] - self.way[cur_p - 1][0])
-        return math.cos(angle) * L + self.way[cur_p - 1][0], math.sin(angle) * L + self.way[cur_p - 1][1]
+        direction = int(self.way[cur_p][0] <= self.way[cur_p - 1][0])
+        return math.cos(angle) * L + self.way[cur_p - 1][0], math.sin(angle) * L + self.way[cur_p - 1][1], direction
 
     def missed(self):
         self.gone = True
 
     def update(self, tick, *args):
         self.walked += self.velocity * self.buffs[VELOCITY_BUFF] * tick / 1000
-        x, y = self.calc_coords(self.walked)
+        x, y, d = self.calc_coords(self.walked)
         self.rect.bottom = y
         self.rect.centerx = x
         self.health_bar.move(self.rect)
@@ -84,6 +89,13 @@ class Enemy(pygame.sprite.Sprite):
                 continue
             buffs.append(self.list_buffs[i])
         self.list_buffs = buffs
+
+        self.next_frame -= tick
+        if self.next_frame <= 0:
+            self.frame += 1
+            self.frame %= len(self.frames[0])
+            self.next_frame = self.frame_time
+            self.image = self.frames[d][self.frame]
 
     def will_walk(self, time):
         return self.walked + self.velocity * self.buffs[VELOCITY_BUFF] * time
