@@ -26,3 +26,6 @@ ARCHERY_TOWER = "data/towers_data/archery.tower"
 ARCHERY_ICON = "towers_data/archery_icon.png"
 SELL_ICON = "sell_icon.png"
 UPGRADE_ICON = "upd_icon.png"
+WIN_LABEL = 'win.png'
+DEFEAT_LABEL = 'defeat.png'
+SHOW_LEVEL = 'show_level.png'

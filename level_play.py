@@ -1,4 +1,5 @@
 import pygame
+from tools.methods import load_image
 from const import service, file_paths, sizes
 from tools import classes, methods, towers, enemies, interface
 import csv
@@ -43,7 +44,7 @@ def run(screen,  *args, **kwargs):
             if result == Wave.LAST_ENEMY:
                 current_wave += 1
         elif not len(enemies_sprites):
-            victory()
+            victory(screen)
             running = service.MAIN_MENU
             continue
         entities_sprites.update(tick, enemies_sprites, entities_sprites, all_sprites)
@@ -70,9 +71,39 @@ def gameover():
     pass
 
 
-def victory():
-    print("YEP")
-    pass
+def victory(screen):
+    global level
+
+    reading = open("data/progress.txt", mode='r')
+    count = int(reading.readline())
+    levels_progress = reading.readline().split(',')
+
+    if levels_progress[level] == '0':
+        levels_progress[level] = '1'
+        count += 1
+        reading.close()
+        reading = open("data/progress.txt", mode='w')
+        reading.write(str(count) + '\n' + ','.join(levels_progress))
+
+    SELF_WIDTH, SELF_HEIGHT = 742, 447
+    all_sprites = pygame.sprite.Group()
+    background = pygame.transform.scale(load_image(file_paths.LAUNCH_BACKGROUND), (SELF_WIDTH, SELF_HEIGHT))
+    classes.Button(file_paths.WIN_LABEL, 641, 295, all_sprites)
+    go_main = classes.Button(file_paths.EXIT_LEVEL_BTN, 566, 405, all_sprites)
+    show_butt = classes.Button(file_paths.SHOW_LEVEL, 566, 505, all_sprites)
+    screen.blit(background, ((sizes.WINDOW_WIDTH - SELF_WIDTH) // 2, (sizes.WINDOW_HEIGHT - SELF_HEIGHT) // 2))
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                return service.QUIT
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                if go_main.get_click(event.pos[0], event.pos[1]):
+                    return service.MAIN_MENU
+                elif show_butt.get_click(event.pos[0], event.pos[1]):
+                    return service.LEVEL_PLAY
+        all_sprites.draw(screen)
+        pygame.display.flip()
+
 
 
 def set_level(x):

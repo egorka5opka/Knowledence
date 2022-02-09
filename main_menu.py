@@ -8,7 +8,6 @@ from tools.classes import Button
 import csv
 from level_play import set_level
 
-
 def run(screen, *args, **kwargs):
     all_sprites = pygame.sprite.Group()
     button_sprites = pygame.sprite.Group()
@@ -20,8 +19,9 @@ def run(screen, *args, **kwargs):
             coords_levels = [(int(i[0]), int(i[1])) for i in reader]
     except Exception as e:
         print("Не удалось загрузить уровни: " + str(e))
-    kol = open("data/progress.txt", mode='r')
-    kol = int(kol.readline())
+
+    count = open("data/progress.txt", 'r')
+    count = int(count.readline())
 
     # fon = pygame.transform.scale(load_image(MAP_BACKGROUND), (WINDOW_WIDTH, WINDOW_HEIGHT))
     fon = load_image(MAP_BACKGROUND)
@@ -30,10 +30,10 @@ def run(screen, *args, **kwargs):
     encyclopedia_button = Button(ENCYCLOPEDIA_BUTTON, 1140, 640, all_sprites, button_sprites)
     upgrading_button = Button(UPGRADING_BUTTON, 1365, 640, all_sprites, button_sprites)
 
-    for i in range(kol):
+    for i in range(count):
         Button(COMPLETE_LEVEL,  coords_levels[i][0], coords_levels[i][1], all_sprites, levels_sprites)
-    if kol != 10:
-        Button(INCOMPLETE_LEVEL, coords_levels[kol][0], coords_levels[kol][1], all_sprites, levels_sprites)
+    if count != 10:
+        Button(INCOMPLETE_LEVEL, coords_levels[count][0], coords_levels[count][1], all_sprites, levels_sprites)
 
     screen.blit(fon, (0, 0))
     all_sprites.draw(screen)
