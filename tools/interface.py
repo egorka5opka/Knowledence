@@ -123,7 +123,7 @@ class Panel:
 
     def get_click(self, pos):
         item = self.cells[pos[0]][pos[1]]
-        methods.build_tower(*item[1])
+        item[1][0](*item[1][1:])
         self.clear()
 
     def clear(self):
@@ -136,7 +136,7 @@ class Panel:
         i, j = 0, 0
         for tow in towers.tower_classes:
             self.set_item(i, j, tow.icon,
-                          (tow, tower_place, money, towers_sprites, entities_sprites, all_sprites), tow.price)
+                          (methods.build_tower, tow, tower_place, money, towers_sprites, entities_sprites, all_sprites), tow.price)
             i += 1
             if i == self.width:
                 i = 0
@@ -144,7 +144,7 @@ class Panel:
 
     def set_tower_panel(self, tower, money, *place_groups):
         self.set_item(0, 0, self.upgrade_icon, lambda: tower.upgrade(money), tower.upgrade_price)
-        self.set_item(self.width - 1, self.height - 1, self.sell_icon, lambda: tower.sell(money, *place_groups),
+        self.set_item(self.width - 1, self.height - 1, self.sell_icon, (tower.sell, money, *place_groups),
                       int(tower.cost * 0.7))
 
 
