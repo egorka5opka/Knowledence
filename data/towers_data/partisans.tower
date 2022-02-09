@@ -1,0 +1,2 @@
+image;columns;rows;damage;price;speed;air;damage_buff;velocity_buff;buffs_time;bullet_image;bullet_velocity;radius;icon;
+towers_data/partisans.png;2;1;1;50;1;1;0.2;-0.1;5;towers_data/tomato.png;400;300;towers_data/tomato.png;

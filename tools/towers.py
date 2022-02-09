@@ -112,4 +112,13 @@ class Archery(Tower):
     velocity_buf_upgrade = 1
 
 
-tower_classes = (Archery, Cannon)
+class Partisans(Tower):
+    frames, base_damage, price, attack_speed, air, damage_buf, velocity_buf, buffs_time, bullet_img, bullet_velocity, \
+        base_attack_radius, icon, bullet_time = load_tower("data/towers_data/partisans.tower", 1)
+    damage_upgrade = 1
+    speed_upgrade = 1
+    damage_buf_upgrade = 2
+    velocity_buf_upgrade = 2
+
+
+tower_classes = (Archery, Cannon, Partisans)
