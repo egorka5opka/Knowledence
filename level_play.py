@@ -57,7 +57,7 @@ def run(screen,  *args, **kwargs):
                 lives -= enemy.price
                 enemy.kill()
                 if lives.get_points() == 0:
-                    gameover()
+                    gameover(screen)
                     running = service.QUIT()
                     break
         all_sprites.draw(screen)
@@ -67,8 +67,25 @@ def run(screen,  *args, **kwargs):
     return running
 
 
-def gameover():
-    pass
+def gameover(screen):
+    SELF_WIDTH, SELF_HEIGHT = 742, 447
+    all_sprites = pygame.sprite.Group()
+    background = pygame.transform.scale(load_image(file_paths.LAUNCH_BACKGROUND), (SELF_WIDTH, SELF_HEIGHT))
+    classes.Button(file_paths.DEFEAT_LABEL, 641, 295, all_sprites)
+    go_main = classes.Button(file_paths.EXIT_LEVEL_BTN, 566, 405, all_sprites)
+    show_butt = classes.Button(file_paths.SHOW_LEVEL, 566, 505, all_sprites)
+    screen.blit(background, ((sizes.WINDOW_WIDTH - SELF_WIDTH) // 2, (sizes.WINDOW_HEIGHT - SELF_HEIGHT) // 2))
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                return service.QUIT
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                if go_main.get_click(event.pos[0], event.pos[1]):
+                    return service.MAIN_MENU
+                elif show_butt.get_click(event.pos[0], event.pos[1]):
+                    return service.LEVEL_PLAY
+        all_sprites.draw(screen)
+        pygame.display.flip()
 
 
 def victory(screen):
@@ -89,6 +106,7 @@ def victory(screen):
     all_sprites = pygame.sprite.Group()
     background = pygame.transform.scale(load_image(file_paths.LAUNCH_BACKGROUND), (SELF_WIDTH, SELF_HEIGHT))
     classes.Button(file_paths.WIN_LABEL, 641, 295, all_sprites)
+
     go_main = classes.Button(file_paths.EXIT_LEVEL_BTN, 566, 405, all_sprites)
     show_butt = classes.Button(file_paths.SHOW_LEVEL, 566, 505, all_sprites)
     screen.blit(background, ((sizes.WINDOW_WIDTH - SELF_WIDTH) // 2, (sizes.WINDOW_HEIGHT - SELF_HEIGHT) // 2))
