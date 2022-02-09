@@ -47,7 +47,7 @@ def run(screen,  *args, **kwargs):
             if result == Wave.LAST_ENEMY:
                 current_wave += 1
         elif not len(enemies_sprites) and not was_victory:
-            victory(screen, lives)
+            running = victory(screen, lives)
             was_victory = True
             continue
         entities_sprites.update(tick, enemies_sprites, entities_sprites, all_sprites)
@@ -144,7 +144,6 @@ def victory(screen, lives):
         pygame.display.flip()
 
 
-
 def set_level(x):
     global level
     if not in_progress:
@@ -215,8 +214,8 @@ class Wave:
                 return self.NOT_SUMMON_ENEMY
             else:
                 self.delay = self.delay_time
-                name, cnt, way = self.enemies[-1]
-                enemies.get_enemy_class(name)(way, *sprite_groups)
+                enemy_class, cnt, way = self.enemies[-1]
+                e = enemy_class(way, *sprite_groups)
                 self.enemies[-1][1] -= 1
                 if self.enemies[-1][1] == 0:
                     self.enemies = self.enemies[:-1]

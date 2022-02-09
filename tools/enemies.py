@@ -30,7 +30,7 @@ class HealthBar(pygame.sprite.Sprite):
 class Enemy(pygame.sprite.Sprite):
     file_name = file_paths.BASE_ENEMY
     frames, max_health, velocity, flying, price, reward = load_enemy(file_name, 1)
-    frame_time = 200
+    frame_time = 180
 
     def __init__(self, way_points, *args):
         super().__init__(*args)
@@ -113,7 +113,29 @@ class Enemy(pygame.sprite.Sprite):
         self.health_bar.update_health(self.hp)
 
 
-enemy_classes = {"base_enemy": Enemy}
+class Dude(Enemy):
+    file_name = "data/enemies/dude.enemy"
+    frames, max_health, velocity, flying, price, reward = load_enemy(file_name, 1)
+
+
+class Griffon(Enemy):
+    file_name = "data/enemies/griffon.enemy"
+    frames, max_health, velocity, flying, price, reward = load_enemy(file_name, 1)
+    frame_time = 120
+
+
+class Hog(Enemy):
+    file_name = "data/enemies/hog.enemy"
+    frames, max_health, velocity, flying, price, reward = load_enemy(file_name, 1)
+    frame_time = 100
+
+
+class Shield(Enemy):
+    file_name = "data/enemies/shield.enemy"
+    frames, max_health, velocity, flying, price, reward = load_enemy(file_name, 1)
+
+
+enemy_classes = {"base_enemy": Enemy, "dude": Dude, "griffon": Griffon, "hog": Hog, "shield": Shield}
 
 
 def get_enemy_class(name):

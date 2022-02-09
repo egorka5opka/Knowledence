@@ -1,2 +1,2 @@
 image;columns;rows;health;velocity;flying;price;reward
-enemies/dude.png;6;1;46;60;0;1;8
+enemies/hog.png;6;1;30;100;0;1;15
