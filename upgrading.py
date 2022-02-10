@@ -19,7 +19,7 @@ def run(screen,  *args, **kwargs):
     except Exception as e:
         print("Не удалось загрузить улучшения: " + str(e))
 
-    background = pygame.transform.scale(load_image(UPGRADING_BACKGROUND), (WINDOW_WIDTH, 1719))
+    background = pygame.transform.scale(load_image(UPGRADING_BACKGROUND), (WINDOW_WIDTH, 1550))
     close_button = Button(CLOSE_BUTTON,  1490, 20, all_sprites, button_sprites)
     for i in range(len(coords_upgrading)):
         Button(UPGRADE_BUTTON,  coords_upgrading[i][0], coords_upgrading[i][1], all_sprites, upgrading_button)
@@ -48,7 +48,6 @@ def run(screen,  *args, **kwargs):
                     for ind, spr in enumerate(upgrading_button):
                         if spr.get_click(event.pos[0], event.pos[1]):
                             type = ind // 3
-
 
         screen.blit(background, (0, up_coord))
         all_sprites.draw(screen)
