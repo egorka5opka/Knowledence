@@ -64,6 +64,36 @@ class Money(pygame.sprite.Sprite):
         self.image.blit(text, (70, 12))
 
 
+class Stars:
+    pattern = methods.load_image(file_paths.STARTS_DISPLAY)
+    font = pygame.font.Font(None, sizes.RES_FONT_SIZE)
+
+    def __init__(self, stars, *args):
+        super().__init__(*args)
+        self.stars = stars
+        self.display_stars()
+        self.rect = self.image.get_rect()
+        self.rect = self.rect.move(sizes.UPGRADING_COUNT_POS)
+
+    def __iadd__(self, other):
+        self.stars += other
+        self.display_stars()
+        return self
+
+    def __isub__(self, other):
+        self.stars -= other
+        self.display_stars()
+        return self
+
+    def get_stars(self):
+        return self.stars
+
+    def display_stars(self):
+        self.image = self.pattern.copy()
+        text = self.font.render(str(self.stars), True, colors.MAIN_TEXT_COLOR)
+        self.image.blit(text, (70, 12))
+
+
 class Panel:
     cell_size = 100
     border_size = 2
