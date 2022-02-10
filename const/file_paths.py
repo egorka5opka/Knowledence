@@ -32,3 +32,4 @@ SHOW_LEVEL = 'show_level.png'
 FILLED_STAR = 'filled_star.png'
 EMPTY_STAR = 'empty_star.png'
 STARTS_DISPLAY = "upradings_count.png"
+BOOK_BACKGROUND = "book_background.png"
