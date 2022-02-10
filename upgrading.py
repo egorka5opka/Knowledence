@@ -39,9 +39,9 @@ def run(screen,  *args, **kwargs):
                     for ind, spr in enumerate(upgrading_button):
                         spr.rect.top = min(coords_upgrading[ind][1], spr.rect.top + 50)
                 elif event.button == 5:
-                    up_coord = max(-919, up_coord - 50)
+                    up_coord = max(-750, up_coord - 50)
                     for ind, spr in enumerate(upgrading_button):
-                        spr.rect.top = max(-919 + coords_upgrading[ind][1], spr.rect.top - 50)
+                        spr.rect.top = max(-750 + coords_upgrading[ind][1], spr.rect.top - 50)
                 elif close_button.get_click(event.pos[0], event.pos[1]):
                     return service.MAIN_MENU
                 else:
