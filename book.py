@@ -1,12 +1,8 @@
 import pygame
 from const import service
-from const.sizes import WINDOW_WIDTH, WINDOW_HEIGHT
-from const.file_paths import BOOK_BACKGROUND, CLOSE_BUTTON, UPGRADE_BUTTON
+from const.file_paths import BOOK_BACKGROUND, CLOSE_BUTTON
 from tools.methods import load_image
 from tools.classes import Button
-import csv
-from const.service import UPGR_BUTT_ORDER
-import tools.interface
 
 
 def run(screen, *args, **kwargs):

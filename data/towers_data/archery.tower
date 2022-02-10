@@ -1,1 +1,1 @@
-image;columns;rows;damage;price;speed;air;damage_buff;velocity_buff;buffs_time;bullet_image;bullet_velocity;radius;icon;towers_data/archery_tower.png;2;1;12;60;1;1;0;0;5;towers_data/arrow.png;500;200;towers_data/archery_icon.png;
+image;columns;rows;damage;price;speed;air;damage_buff;velocity_buff;buffs_time;bullet_image;bullet_velocity;radius;icon;towers_data/archery_tower.png;2;1;12;60;1;1;0;0;5;towers_data/arrow.png;500;215;towers_data/archery_icon.png;
