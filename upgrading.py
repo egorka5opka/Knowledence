@@ -67,11 +67,11 @@ def run(screen, *args, **kwargs):
                             count -= 1
                             stars -= 1
                             if type_upgr == 0:
-                                tower[service.ATTACK_RADIUS] = str(int(tower[service.ATTACK_RADIUS]) + 5)
+                                tower[service.ATTACK_RADIUS] = str(float(tower[service.ATTACK_RADIUS]) + 5)
                             elif type_upgr == 1:
-                                tower[service.DAMAGE] = str(int(tower[service.DAMAGE]) + 5)
+                                tower[service.DAMAGE] = str(float(tower[service.DAMAGE]) + 5)
                             else:
-                                tower[service.ATTACK_SPEED] = str(int(tower[service.ATTACK_SPEED]) + 5)
+                                tower[service.ATTACK_SPEED] = str(float(tower[service.ATTACK_SPEED]) + 5)
 
                             file = open(UPGR_BUTT_ORDER[type_tower], "w")
                             writer = csv.DictWriter(file, fieldnames=list(tower.keys()), delimiter=";")
