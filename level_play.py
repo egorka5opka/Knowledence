@@ -101,31 +101,39 @@ def victory(screen, lives):
     reading = open("data/progress.txt", mode='r')
     count = int(reading.readline())
     levels_progress = reading.readline().split(',')
-
-    if levels_progress[level] == '0':
-        levels_progress[level] = '1'
-        count += 1
-        reading.close()
-        reading = open("data/progress.txt", mode='w')
-        reading.write(str(count) + '\n' + ','.join(levels_progress))
+    upgrading_count = int(reading.readline())
 
     SELF_WIDTH, SELF_HEIGHT = 742, 447
     all_sprites = pygame.sprite.Group()
     background = pygame.transform.scale(load_image(file_paths.LAUNCH_BACKGROUND), (SELF_WIDTH, SELF_HEIGHT))
     classes.Button(file_paths.WIN_LABEL, 641, 295, all_sprites)
 
-    if lives.start_points * 0.7 <= lives.get_points():
-        classes.Button(file_paths.FILLED_STAR, 646, 207, all_sprites)
+    now_stars = 1
+    classes.Button(file_paths.FILLED_STAR, 646, 207, all_sprites)
+    if lives.start_points * 0.4 <= lives.get_points():
         classes.Button(file_paths.FILLED_STAR, 735, 194, all_sprites)
-        classes.Button(file_paths.FILLED_STAR, 824, 207, all_sprites)
-    elif lives.start_points * 0.4 <= lives.get_points():
-        classes.Button(file_paths.FILLED_STAR, 646, 207, all_sprites)
-        classes.Button(file_paths.FILLED_STAR, 735, 194, all_sprites)
-        classes.Button(file_paths.EMPTY_STAR, 824, 207, all_sprites)
+        now_stars += 1
     else:
-        classes.Button(file_paths.FILLED_STAR, 646, 207, all_sprites)
         classes.Button(file_paths.EMPTY_STAR, 735, 194, all_sprites)
+    if lives.start_points * 0.7 <= lives.get_points():
+        classes.Button(file_paths.FILLED_STAR, 824, 207, all_sprites)
+        now_stars += 1
+    else:
         classes.Button(file_paths.EMPTY_STAR, 824, 207, all_sprites)
+
+    if levels_progress[level] == '0':
+        levels_progress[level] = str(now_stars)
+        count += 1
+        upgrading_count += now_stars
+        reading.close()
+        reading = open("data/progress.txt", mode='w')
+        reading.write(str(count) + '\n' + ','.join(levels_progress) + '\n' + str(upgrading_count))
+    elif int(levels_progress[level]) < now_stars:
+        levels_progress[level] = str(now_stars)
+        upgrading_count += now_stars - int(levels_progress[level])
+        reading.close()
+        reading = open("data/progress.txt", mode='w')
+        reading.write(str(count) + '\n' + ','.join(levels_progress) + '\n' + str(upgrading_count))
 
     go_main = classes.Button(file_paths.EXIT_LEVEL_BTN, 566, 405, all_sprites)
     show_butt = classes.Button(file_paths.SHOW_LEVEL, 566, 505, all_sprites)
