@@ -48,7 +48,7 @@ def run(screen, *args, **kwargs):
                 elif home_button.get_click(event.pos[0], event.pos[1]):
                     return service.START_MENU
                 elif encyclopedia_button.get_click(event.pos[0], event.pos[1]):
-                    pass
+                    return service.BOOK
                 elif upgrading_button.get_click(event.pos[0], event.pos[1]):
                     return service.UPGRADING
                 for ind, spr in enumerate(levels_sprites):
