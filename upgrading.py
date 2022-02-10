@@ -44,6 +44,11 @@ def run(screen,  *args, **kwargs):
                         spr.rect.top = max(-919 + coords_upgrading[ind][1], spr.rect.top - 50)
                 elif close_button.get_click(event.pos[0], event.pos[1]):
                     return service.MAIN_MENU
+                else:
+                    for ind, spr in enumerate(upgrading_button):
+                        if spr.get_click(event.pos[0], event.pos[1]):
+                            type = ind // 3
+
 
         screen.blit(background, (0, up_coord))
         all_sprites.draw(screen)

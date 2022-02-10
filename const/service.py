@@ -26,3 +26,5 @@ ATTACK_RADIUS = "radius"
 BULLET_TIME = "bullet_time"
 TOWER_BUFFS_TIME = "buffs_time"
 TOWER_ICON = "icon"
+UPGR_BUTT_ORDER = ["data/towers_data/archery.tower", "data/towers_data/cannon.tower",
+                   "data/towers_data/partisans.tower", "data/towers_data/oil_trap.tower"]
