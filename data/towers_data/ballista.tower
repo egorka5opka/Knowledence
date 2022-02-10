@@ -1,2 +1,2 @@
 image;columns;rows;damage;price;speed;air;damage_buff;velocity_buff;buffs_time;bullet_image;bullet_velocity;radius;icon;
-towers_data/ballista.png;1;1;40;250;0.5;1;0;0;5;towers_data/spear.png;250;700;towers_data/ballista_icon.png;
+towers_data/ballista.png;1;1;40;250;0.5;1;0;0;5;towers_data/spear.png;250;250;towers_data/ballista_icon.png;

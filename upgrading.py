@@ -61,22 +61,23 @@ def run(screen, *args, **kwargs):
                             type_tower = ind // 3
                             type_upgr = ind % 3
                             file = open(UPGR_BUTT_ORDER[type_tower], "r")
-                            reader = csv.DictReader(file, delimetr=';')
+                            reader = csv.DictReader(file, delimiter=';')
                             tower = reader.__next__()
-                            fin.close()
+                            file.close()
                             count -= 1
                             stars -= 1
                             if type_upgr == 0:
-                                tower[service.ATTACK_RADIUS] += 5
+                                tower[service.ATTACK_RADIUS] = str(int(tower[service.ATTACK_RADIUS]) + 5)
                             elif type_upgr == 1:
-                                tower[service.DAMAGE] += 5
+                                tower[service.DAMAGE] = str(int(tower[service.DAMAGE]) + 5)
                             else:
-                                tower[service.ATTACK_SPEED] += 5
+                                tower[service.ATTACK_SPEED] = str(int(tower[service.ATTACK_SPEED]) + 5)
 
                             file = open(UPGR_BUTT_ORDER[type_tower], "w")
-                            writer = csv.DictWriter(file, filednames=list(tower.keys()), delimiter=";")
+                            writer = csv.DictWriter(file, fieldnames=list(tower.keys()), delimiter=";")
                             writer.writeheader()
-                            writer.write(tower)
+                            writer.writerow(tower)
+                            file.close()
 
         screen.blit(background, (0, up_coord))
         all_sprites.draw(screen)

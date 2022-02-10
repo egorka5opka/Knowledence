@@ -127,13 +127,13 @@ def victory(screen, lives):
         upgrading_count += now_stars
         reading.close()
         reading = open("data/progress.txt", mode='w')
-        reading.write(str(count) + '\n' + ','.join(levels_progress) + '\n' + str(upgrading_count))
+        reading.write(str(count) + '\n' + ','.join(levels_progress) + str(upgrading_count))
     elif int(levels_progress[level]) < now_stars:
         levels_progress[level] = str(now_stars)
         upgrading_count += now_stars - int(levels_progress[level])
         reading.close()
         reading = open("data/progress.txt", mode='w')
-        reading.write(str(count) + '\n' + ','.join(levels_progress) + '\n' + str(upgrading_count))
+        reading.write(str(count) + '\n' + ','.join(levels_progress) + str(upgrading_count))
 
     go_main = classes.Button(file_paths.EXIT_LEVEL_BTN, 566, 405, all_sprites)
     show_butt = classes.Button(file_paths.SHOW_LEVEL, 566, 505, all_sprites)

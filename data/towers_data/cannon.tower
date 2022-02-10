@@ -1,2 +1,2 @@
 image;columns;rows;damage;price;speed;air;damage_buff;velocity_buff;buffs_time;bullet_image;bullet_velocity;radius;icon;
-towers_data/cannon.png;1;1;50;100;0.4;0;0;0;5;towers_data/cannonball.png;200;400;towers_data/cannon_icon.png;
+towers_data/cannon.png;1;1;50;100;0.4;0;0;0;5;towers_data/cannonball.png;200;250;towers_data/cannon_icon.png;
