@@ -5,14 +5,15 @@ import pygame
 pygame.init()
 from const import service, sizes
 screen = pygame.display.set_mode(sizes.WINDOW_SIZE)
-import start_menu, main_menu, level_play, upgrading
+import start_menu, main_menu, level_play, upgrading, book
 
 
 def main():
     actions = {service.START_MENU: start_menu.run,
                service.MAIN_MENU: main_menu.run,
                service.LEVEL_PLAY: level_play.run,
-               service.UPGRADING: upgrading.run}
+               service.UPGRADING: upgrading.run,
+               service.BOOK: book.run}
     # функция run обрабатывает одну активность и возвращает какая активность будет следующей
     cur_action = service.START_MENU
     # cur_action = service.LEVEL_PLAY
