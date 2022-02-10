@@ -64,9 +64,9 @@ class Money(pygame.sprite.Sprite):
         self.image.blit(text, (70, 12))
 
 
-class Stars:
+class Stars(pygame.sprite.Sprite):
     pattern = methods.load_image(file_paths.STARTS_DISPLAY)
-    font = pygame.font.Font(None, sizes.RES_FONT_SIZE)
+    font = pygame.font.Font(None, 80)
 
     def __init__(self, stars, *args):
         super().__init__(*args)
@@ -91,7 +91,7 @@ class Stars:
     def display_stars(self):
         self.image = self.pattern.copy()
         text = self.font.render(str(self.stars), True, colors.MAIN_TEXT_COLOR)
-        self.image.blit(text, (70, 12))
+        self.image.blit(text, (70, 9))
 
 
 class Panel:
